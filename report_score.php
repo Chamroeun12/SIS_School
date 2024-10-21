@@ -15,9 +15,9 @@ function fetchStudentData($conn)
     }
     $query = "SELECT stu.En_name, ms.Homework, ms.Participation, ms.Attendance, ms.Monthly, ms.Average FROM tb_month_score ms
 		INNER JOIN tb_student stu ON ms.Stu_id = stu.ID
-		INNER JOIN tb_class c ON ms.Class_id = c.ClassID
+		INNER JOIN tb_classroom c ON ms.Class_id = c.id
 		INNER JOIN tb_course co ON c.course_id = co.id
-		INNER JOIN tb_teacher t ON c.Teacher_id = t.id WHERE c.`status` = 'active' AND c.Class_name='$classname'";
+		INNER JOIN tb_teacher t ON c.Teacher_id = t.id WHERE c.`status` = 'active' AND c.Name='$classname'";
 
     $stmt = $conn->prepare($query);
     $stmt->execute();

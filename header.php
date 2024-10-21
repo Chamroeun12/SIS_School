@@ -410,9 +410,9 @@ $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
                             </ul>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="sch_list.php"
+                                    <a href="sch_stu_view.php"
                                         class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'sch_list.php') echo 'active'; ?> ">
-                                        <p class="stu-list text-white pl-3">
+                                        <p class="text-white pl-3">
                                             <i class="fas fa-circle text-white" style="font-size:10px;"></i>
                                             បង្ហាញកាលវិភាគ
                                         </p>
