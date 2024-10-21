@@ -9,16 +9,20 @@ if (session_status() === PHP_SESSION_NONE) {
 
 if (isset($_POST['classid'])) {
     $classid = $_POST['classid'];
-    $sql = "SELECT c.Name, sch.Start_class, sch.End_class, sch.Time_in, 
-                    sch.Time_out,c.`status`,sch.Monday, sch.Tuesday, sch.Wednesday, sch.Thursday, sch.Friday
+    $sql = "SELECT sch.Start_class, sch.End_class, sch.Time_in, 
+                    sch.Time_out,sch.Monday, sch.Tuesday, sch.Wednesday, sch.Thursday, sch.Friday
         FROM tb_sch_student sch
-		INNER JOIN tb_classroom c ON sch.Class_id = c.id WHERE Class_id = $classid";
+		INNER JOIN tb_class c ON sch.Class_id = c.ClassID WHERE Class_id = $classid";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $sch = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-$sql = "SELECT * FROM tb_classroom WHERE status='active'";
+$sql = "SELECT * FROM tb_class
+INNER join
+    tb_course ON tb_class.course_id = tb_course.id
+    INNER jOIN tb_classroom ON tb_class.room_id = tb_classroom.id
+where tb_class.Status = 'Active'";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -41,11 +45,12 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="form-group mt-2 card p-4">
             <div class="row">
                 <div class="col-md-4">
-                    <select name="classid" id="" class="form-control custom-select">
-                        <option selected disabled>--ជ្រើសរើស--</option>
-                        <?php foreach ($class as $row) { ?>
-                        <option value="<?= $row['id']; ?>"><?= $row['Name']; ?></option>
-                        <?php } ?>
+                    <select name="classid" class="form-control">
+                        <option value="">--ជ្រើសរើសថ្នាក់--</option>
+                        <?php foreach ($class as $row) : ?>
+                        <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
+                            <?= $row['Course_name']; ?> - <?= $row['Shift']; ?> </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-md-6">
