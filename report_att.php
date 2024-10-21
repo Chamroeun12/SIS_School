@@ -1,27 +1,33 @@
 <?php
-require('fpdf/fpdf.php');
-require 'vendors/autoload.php';
+require('fpdf/fpdf.php'); // or use TCPDF if needed
+require 'vendors/autoload.php'; // for PhpSpreadsheet
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-include_once 'connection.php';
+include_once 'connection.php'; // Ensure this file connects to the database correctly
 
 // Function to fetch student data
 function fetchStudentData($conn)
 {
     if (isset($_POST['classname'])) {
+        // Sanitize class name
         $classname = filter_input(INPUT_POST, 'classname', FILTER_SANITIZE_STRING);
 
-        $query = "SELECT stu.En_name, stu.Stu_code, stu.Gender, r.Name, co.Course_name, c.Shift, att.Date, att.Attendance FROM tb_attendance att
-INNER JOIN tb_student stu ON att.Stu_id = stu.ID
-INNER JOIN tb_class c ON att.Class_id = c.ClassID
-INNER JOIN tb_course co ON c.course_id = co.id
-INNER JOIN tb_classroom r ON c.room_id = r.id WHERE r.Name = $classname";
+        // SQL query with a parameter placeholder
+        $query = "SELECT stu.En_name, stu.Stu_code, stu.Gender, r.Name, co.Course_name, c.Shift, att.Date, att.Attendance 
+                  FROM tb_attendance att
+                  INNER JOIN tb_student stu ON att.Stu_id = stu.ID
+                  INNER JOIN tb_class c ON att.Class_id = c.ClassID
+                  INNER JOIN tb_course co ON c.course_id = co.id
+                  INNER JOIN tb_classroom r ON c.room_id = r.id 
+                  WHERE r.Name = :classname";
 
+        // Prepare and bind parameters
         $stmt = $conn->prepare($query);
         $stmt->bindParam(':classname', $classname, PDO::PARAM_STR);
         $stmt->execute();
+        
         return [$classname, $stmt->fetchAll(PDO::FETCH_ASSOC)];
     }
     return [null, []];
@@ -36,6 +42,7 @@ if (empty($data)) {
 }
 
 if (isset($_POST['export_excel'])) {
+    // Create a new spreadsheet
     $spreadsheet = new Spreadsheet();
     $sheet = $spreadsheet->getActiveSheet();
     $headers = ['Attendance Date', 'Student Code', 'Student Name', 'Gender', 'Course Name', 'Class Name', 'Shift', 'Attendance Status'];
@@ -57,13 +64,14 @@ if (isset($_POST['export_excel'])) {
         $sheet->setCellValue('E' . $rowCount, $row['Course_name']);
         $sheet->setCellValue('F' . $rowCount, $row['Name']);
         $sheet->setCellValue('G' . $rowCount, $row['Shift']);
-        $sheet->setCellValue('H' . $rowCount, $row['Attandance']);
+        $sheet->setCellValue('H' . $rowCount, $row['Attendance']); // Corrected typo from 'Attandance'
 
         $rowCount++;
     }
 
     // Save Excel file with dynamic filename
-    $filename = "attendance_report_{$classname}_" . date('Y-m-d') . ".xlsx";
+    $classname_safe = preg_replace('/[^A-Za-z0-9_\-]/', '_', $classname); // Clean classname for file name
+    $filename = "attendance_report_{$classname_safe}_" . date('Y-m-d') . ".xlsx";
     $writer = new Xlsx($spreadsheet);
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header("Content-Disposition: attachment;filename=\"$filename\"");
@@ -71,6 +79,7 @@ if (isset($_POST['export_excel'])) {
     $writer->save('php://output');
     exit;
 } elseif (isset($_POST['export_pdf'])) {
+    // Using TCPDF for PDF generation
     $pdf = new TCPDF();
     $pdf->SetCreator(PDF_CREATOR);
     $pdf->SetTitle('Students Report Attendance');
@@ -109,7 +118,8 @@ if (isset($_POST['export_excel'])) {
     $pdf->writeHTML($html, true, false, true, false, '');
 
     // Output PDF with dynamic filename
-    $pdfFilename = "students_report_attendance_{$classname}_" . date('Y-m-d') . ".pdf";
+    $classname_safe = preg_replace('/[^A-Za-z0-9_\-]/', '_', $classname); // Clean classname for file name
+    $pdfFilename = "students_report_attendance_{$classname_safe}_" . date('Y-m-d') . ".pdf";
     $pdf->Output($pdfFilename, 'I');
     exit;
 }
