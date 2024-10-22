@@ -65,14 +65,6 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- /.row -->
 
     <div class="row m-2">
-        <!-- <div class="form-group" style="width: 300px;">
-                            <input type="text" id="" name="namesearch" class="search form-control float-right"
-                                placeholder="ស្វែងរក" ">
-                            <div class="input-group-append">
-                            </div>
-                        </div> -->
-        <!-- /.card-header -->
-
         <div class="card-body table-responsive p-0 text-sm mt-1">
             <table class="table table-hover table-bordered text-nowrap text-center" "
                 id=" userTbl">
@@ -117,21 +109,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td class="align-middle"><?php echo $row['Wednesday']; ?></td>
                         <td class="align-middle"><?php echo $row['Thursday']; ?></td>
                         <td class="align-middle"><?php echo $row['Friday']; ?></td>
-                        <td class="align-middle">
-                            <!-- <form action="report_sch.php" method="POST">
-                                        <button type="submit" name="export_pdf" title="PDF"
-                                            style="border:none; background: transparent; padding:0px;"><i
-                                                class="fa fa-file-pdf text-danger ml-1" style=" font-size: 18px;"></i>
-                                            <input type="hidden" name="classname" value="<?= $row['Class_name']; ?>">
-                                        </button>
-                                        <button type="submit" name="export_excel" title="Excel"
-                                            style="border:none; background: transparent; padding:0px;"><i
-                                                class="fa fa-file-excel text-success ml-2"
-                                                style=" font-size: 18px;"></i></button>
 
-
-                                    </form> -->
-                        </td>
                     </tr>
                     <?php endforeach; ?>
                     <?php } else {
