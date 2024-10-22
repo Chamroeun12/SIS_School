@@ -44,7 +44,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="row">
                 <div class="col-md-4">
                     <select name="classid" class="form-control form-select">
-                        <option value="">--ជ្រើសរើសថ្នាក់--</option>
+                        <option selected disabled>--ជ្រើសរើសថ្នាក់--</option>
                         <?php foreach ($class as $row) : ?>
                         <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
                             <?= $row['Course_name']; ?> - <?= $row['Shift']; ?> </option>
@@ -52,7 +52,6 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </select>
                 </div>
                 <div class="col-md-6">
-
                 </div>
                 <div class="col-md-2">
                     <input type="submit" class="btn1 bg-sis text-white" name="save" id="save" value="បង្ហាញ"
