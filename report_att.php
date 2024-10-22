@@ -88,9 +88,9 @@ if (isset($_POST['export_excel'])) {
     $pdf->SetFont($fontname, '', 10);
 
     // Ensure UTF-8 support in the PDF
-    $pdf->SetFont($fontname, '', 12, 'Battambang-Regular.ttf', 'false');
-    $pdf->SetTextColor(0, 0, 255); // Blue color for the title
-    $pdf->Write(0, 'បញ្ចីវត្តមានសិស្ស', '', 0, 'C', true, 0, false, false, 0);
+    $pdf->SetFont($fontname, '', 12, 'Battambang-Regular.ttf', 'true');
+    $pdf->SetTextColor('#152550'); // Blue color for the title
+    $pdf->Write(0, 'បញ្ចីវត្តមានសិស្ស', '', '', 'C', true, 0, false, false, 0);
 
     $pdf->Ln(4); // Space after title
     
@@ -98,15 +98,15 @@ if (isset($_POST['export_excel'])) {
     $pdf->SetTextColor(0, 0, 0);
     // Start table with headers
     $html = '<table border="1" cellspacing="0" cellpadding="4">
-              <tr style="background-color: powderblue;">
-                  <th style="color: blue; text-align: center;">កាលបរិច្ឆេទ</th>
-                  <th style="color: blue; text-align: center;">អត្តលេខ</th>
-                  <th style="color: blue; text-align: center;">ឈ្មោះ</th>
-                  <th style="color: blue; text-align: center;">ភេទ</th>
-                  <th style="color: blue; text-align: center;">កម្រិតសិក្សា</th>
-                  <th style="color: blue; text-align: center;">បន្ទប់</th>
-                  <th style="color: blue; text-align: center;">វេនសិក្សា</th>
-                  <th style="color: blue; text-align: center;">វត្តមាន</th>
+              <tr style="background-color: #153550;">
+                  <th style="color: white; text-align: center;">កាលបរិច្ឆេទ</th>
+                  <th style="color: white; text-align: center;">អត្តលេខ</th>
+                  <th style="color: white; text-align: center;">ឈ្មោះ</th>
+                  <th style="color: white; text-align: center;">ភេទ</th>
+                  <th style="color: white; text-align: center;">កម្រិតសិក្សា</th>
+                  <th style="color: white; text-align: center;">បន្ទប់</th>
+                  <th style="color: white; text-align: center;">វេនសិក្សា</th>
+                  <th style="color: white; text-align: center;">វត្តមាន</th>
               </tr>';
     
     // Fill table rows

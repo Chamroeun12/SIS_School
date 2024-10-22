@@ -17,7 +17,7 @@ function fetchStudentData($conn) {
         s.En_name AS Student_Name,
         s.Gender,
         s.DOB,
-        c.Class_name,
+        r.Name,
         co.Course_name,
         c.Shift,
         t.En_name AS Teacher_Name,
@@ -26,12 +26,13 @@ function fetchStudentData($conn) {
         tb_add_to_class ad
     INNER JOIN
         tb_class c ON ad.Class_id = c.ClassID
+    INNER JOIN tb_classroom r ON c.room_id = r.id
     INNER JOIN
         tb_course co ON c.course_id = co.id
     INNER JOIN
         tb_teacher t ON c.Teacher_id = t.id
     INNER JOIN
-        tb_student s ON ad.Stu_id = s.ID WHERE  c.Class_name='$classname'";
+        tb_student s ON ad.Stu_id = s.ID WHERE  r.Name='$classname'";
 
     $stmt = $conn->prepare($query);
     $stmt->execute();
@@ -82,9 +83,9 @@ if (isset($_POST['export_excel'])) {
     $pdf->SetCreator(PDF_CREATOR);
 
     $pdf->AddPage();
-//     $fontname = TCPDF_FONTS::addTTFfont('Suwannaphum.ttf', 'TrueTypeUnicode', '', 96);
-// $pdf->SetFont($fontname, '', 10);
-    $pdf->SetFont('FreeSerif', '', 10);
+    $fontname = TCPDF_FONTS::addTTFfont('Battambang-Regular.ttf', 'TrueTypeUnicode', '', 96);
+$pdf->SetFont($fontname, '', 10);
+    // $pdf->SetFont('Battambang-Regular.ttf', '', 10);
 
     // Add content to PDF
     $html = '<h1 style="color: #151515; text-align: center;">Students In Class</h1>';
@@ -103,9 +104,9 @@ if (isset($_POST['export_excel'])) {
     foreach ($data as $row) {
         $html .= '<tr>
                   <td style="text-align: center; font-size:12px;">' . htmlspecialchars($row['Student_Name']) . '</td>
-                  <td style="text-align: center; font-size:12px; font-family:FreeSerif;">' . htmlspecialchars($row['Gender']) . '</td>
+                  <td style="text-align: center; font-size:12pxb;">' . htmlspecialchars($row['Gender']) . '</td>
                   <td style="text-align: center; font-size:12px;">' . htmlspecialchars($row['DOB']) . '</td>
-                  <td style="text-align: center; font-size:12px;">' . htmlspecialchars($row['Class_name']) . '</td>
+                  <td style="text-align: center; font-size:12px;">' . htmlspecialchars($row['Name']) . '</td>
                   <td style="text-align: center; font-size:12px;">' . htmlspecialchars($row['Course_name']) . '</td>
                   <td style="text-align: center; font-size:12px;">' . htmlspecialchars($row['Shift']) . '</td>
                   <td style="text-align: center; font-size:12px;">' . htmlspecialchars($row['Teacher_Name']) . '</td>
