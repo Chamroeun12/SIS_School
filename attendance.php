@@ -142,7 +142,7 @@ th {
                 <div class="card mb-3">
                     <div class="card-body rounded-0">
                         <div class="container-fluid">
-                            <div class="row align-items-end">
+                            <div class="row align-items-end ">
                                 <div class="col-sm-5">
                                     <label for="Class_id" class="form-label">សម្រាប់ថ្នាក់</label>
                                     <select name="Class_id" id="Class_id" class="form-control" required

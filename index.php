@@ -114,7 +114,7 @@ function getCount($conn, $table, $column) {
                             <div class="card-tools">
                                 <!-- button with a dropdown -->
                                 <div class="btn-group">
-                                    <button type="button" class="btn bg-sis text-white btn-sm dropdown-toggle"
+                                    <button type="button" class="btn bg-info btn-sm dropdown-toggle"
                                         data-toggle="dropdown" data-offset="-52">
                                         <i class="fas fa-bars"></i>
                                     </button>
@@ -125,10 +125,10 @@ function getCount($conn, $table, $column) {
                                         <a href="#" class="dropdown-item">View calendar</a>
                                     </div>
                                 </div>
-                                <button type="button" class="btn bg-sis text-white btn-sm" data-card-widget="collapse">
+                                <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
                                 </button>
-                                <button type="button" class="btn bg-sis text-white btn-sm" data-card-widget="remove">
+                                <button type="button" class="btn bg-info  btn-sm" data-card-widget="remove">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
