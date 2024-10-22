@@ -37,7 +37,7 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container-fluid">
         <div class="row mb-2 card-header">
             <div class="col-sm-6">
-                <h2 class="m-0">|តារាងថ្នាក់រៀន</h2>
+                <h2 class="m-0">|តារាងថ្នាក់រៀនសម្រាប់បញ្ចូលពិន្ទុ</h2>
             </div>
         </div>
     </div>
@@ -99,26 +99,25 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $i=1; foreach ($data as $key => $value) { ?>
-                            <tr>
-                                <td><?php echo $i++ ?></td>
+                            <?php $i = 1;
+                            foreach ($data as $key => $value) { ?>
+                                <tr>
+                                    <td><?php echo $i++ ?></td>
 
-                                <td><?php echo $value['Name']; ?></td>
-                                <td><?php echo $value['Course_name']; ?></td>
-                                <td><?php echo $value['En_name']; ?></td>
-                                <td><?php echo $value['Time_in']; ?></td>
-                                <td><?php echo $value['Time_out']; ?></td>
-                                <td><?php echo $value['Start_class']; ?></td>
-                                <td><?php echo $value['End_class']; ?></td>
-                                <!-- <td><?php echo date('d-M-Y', strtotime($value['Start_class '])); ?></td>
-                                <td><?php echo date('d-M-Y', strtotime($value['End_class '])); ?></td> -->
-                                <td><?php echo $value['Shift']; ?></td>
-                                <td>
-                                    <a class="btn1 bg-sis text-white"
-                                        href="add_score.php?class_id=<?php echo $value['ClassID']; ?>">បញ្ចូលពិន្ទុ</a>
-                                </td>
+                                    <td><?php echo $value['Name']; ?></td>
+                                    <td><?php echo $value['Course_name']; ?></td>
+                                    <td><?php echo $value['En_name']; ?></td>
+                                    <td><?php echo date('h:i A', strtotime($value['Time_in'])); ?></td>
+                                    <td><?php echo date('h:i A', strtotime($value['Time_out'])); ?></td>
+                                    <td><?php echo date('d-M-Y', strtotime($value['Start_class'])); ?></td>
+                                    <td><?php echo date('d-M-Y', strtotime($value['End_class'])); ?></td>
+                                    <td><?php echo $value['Shift']; ?></td>
+                                    <td>
+                                        <a class="btn1 bg-sis text-white"
+                                            href="add_score.php?class_id=<?php echo $value['ClassID']; ?>">បញ្ចូលពិន្ទុ</a>
+                                    </td>
 
-                            </tr>
+                                </tr>
                             <?php } ?>
                         </tbody>
                     </table>
@@ -137,7 +136,7 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         ?>
                     ">&laquo;</a></li>
                             <?php for ($i = 1; $i <= $maxpage; $i++) { ?>
-                            <li class="page-item
+                                <li class="page-item
                       <?php
                                 if (isset($_GET['page'])) {
                                     if ($i == $_GET['page'])
@@ -147,7 +146,7 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         echo ' active ';
                                 }
                         ?>"><a class="page-link" href="class.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                            </li>
+                                </li>
                             <?php } ?>
                             <li class="page-item"><a class="page-link" href="class.php?page=
                      <?php

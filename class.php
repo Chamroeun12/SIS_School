@@ -87,11 +87,11 @@ if (isset($_POST['btnsave'])) {
                             <div class="form-group">
                                 <div class="input-group">
                                     <!-- Class selection dropdown -->
-                                    <select name="addclass" class="form-control">
-                                        <option value="">--ជ្រើសរើសថ្នាក់--</option>
+                                    <select name="addclass" class="form-control form-select">
+                                        <option selected disabled>--ជ្រើសរើសថ្នាក់--</option>
                                         <?php foreach ($class as $row) : ?>
-                                        <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
-                                            <?= $row['Course_name']; ?> - <?= $row['Shift']; ?> </option>
+                                            <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
+                                                <?= $row['Course_name']; ?> - <?= $row['Shift']; ?> </option>
                                         <?php endforeach; ?>
                                     </select>
                                     <div class="ml-3">
@@ -127,22 +127,22 @@ if (isset($_POST['btnsave'])) {
                                 </thead>
                                 <tbody id="showdata">
                                     <?php if (isset($student)) { ?>
-                                    <?php foreach ($student as $key => $value) { ?>
-                                    <tr>
-                                        <td>
-                                            <div class="icheck-primary">
-                                                <input type="checkbox" name="addstu[]"
-                                                    value="<?php echo $value['ID']; ?>" id="check<?php echo $key; ?>">
-                                                <label for="check<?php echo $key; ?>"></label>
-                                            </div>
-                                        </td>
-                                        <td><?php echo ($key + 1); ?></td>
-                                        <td><?php echo $value['Stu_code']; ?></td>
-                                        <td><?php echo $value['En_name']; ?></td>
-                                        <td><?php echo $value['Kh_name']; ?></td>
-                                        <td><?php echo $value['Gender']; ?></td>
-                                    </tr>
-                                    <?php } ?>
+                                        <?php foreach ($student as $key => $value) { ?>
+                                            <tr>
+                                                <td>
+                                                    <div class="icheck-primary">
+                                                        <input type="checkbox" name="addstu[]"
+                                                            value="<?php echo $value['ID']; ?>" id="check<?php echo $key; ?>">
+                                                        <label for="check<?php echo $key; ?>"></label>
+                                                    </div>
+                                                </td>
+                                                <td><?php echo ($key + 1); ?></td>
+                                                <td><?php echo $value['Stu_code']; ?></td>
+                                                <td><?php echo $value['En_name']; ?></td>
+                                                <td><?php echo $value['Kh_name']; ?></td>
+                                                <td><?php echo $value['Gender']; ?></td>
+                                            </tr>
+                                        <?php } ?>
                                     <?php } ?>
                                 </tbody>
                             </table>

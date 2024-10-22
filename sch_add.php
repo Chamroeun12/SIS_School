@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <section class="content-wrapper">
     <form action="" method="POST">
         <div class="col-sm-6 pt-3 mb-3 ml-3">
-            <h3>|បញ្ចូលកាលវិភាគ</h3>
+            <h3>|តារាងបញ្ចូលកាលវិភាគ</h3>
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -109,8 +109,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="container-fluid">
                             <div class="row align-items-end">
                                 <div class="col-sm-4">
-                                    <label for="Class_id" class="form-label">សម្រាប់ថ្នាក់</label>
-                                    <select name="classid" id="Class_id" class="form-control" style="font-size:14px;">
+                                    <label for="Class_id" class="form-label">សម្រាប់ថ្នាក់:</label>
+                                    <select name="classid" id="Class_id" class="form-control form-select"
+                                        style="font-size:14px;">
                                         <option value="">--ជ្រើសរើសថ្នាក់--</option>
                                         <?php foreach ($classes as $row) : ?>
                                         <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
@@ -119,12 +120,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </select>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label for="sch_start" class="form-label">ចាប់ផ្តើម</label>
+                                    <label for="sch_start" class="form-label">ឆ្នាំសិក្សាចាប់ផ្តើម:</label>
                                     <input type="date" name="sch_start" id="sch_start" class="form-control"
                                         style="font-size:14px;" value="">
                                 </div>
                                 <div class="col-sm-4">
-                                    <label for="sch_end" class="form-label">បញ្ចប់</label>
+                                    <label for="sch_end" class="form-label">ឆ្នាំសិក្សាបញ្ចប់:</label>
                                     <input type="date" name="sch_end" id="sch_end" class="form-control"
                                         style="font-size:14px;" value="">
                                 </div>
@@ -135,42 +136,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
 
-        <div class="card mt-1 pt-2">
+        <div class="card">
             <div id="itemContainer" class="p-2">
-                <div class="row input-group">
-                    <div class="form-group mb-2 col-md-4">
+                <div class="row input-group ml-2">
+                    <div class="form-group mb-2 col-md-6">
+                        <label for="" class="form-label">ម៉ោងចូល:</label>
                         <input type="time" class="form-control" name="item[]" placeholder="Start Time">
                     </div>
-                    <div class="form-group mb-2 col-md-4">
+                    <div class="form-group mb-2 col-md-6">
+                        <label for="" class="form-label">ម៉ោងចេញ:</label>
                         <input type="time" class="form-control" name="item[]" placeholder="End Time">
                     </div>
                     <div class="form-group mb-2 col-md-2">
+                        <label for="" class="form-label">ថ្ងៃច័ន្ទ:</label>
                         <input type="text" class="form-control" name="item[]" placeholder="Monday">
                     </div>
                     <div class="form-group mb-2 col-md-2">
+                        <label for="" class="form-label">ថ្ងៃអង្គារ:</label>
                         <input type="text" class="form-control" name="item[]" placeholder="Tuesday">
                     </div>
                     <div class="form-group mb-2 col-md-2">
+                        <label for="" class="form-label">ថ្ងៃពុធ:</label>
                         <input type="text" class="form-control" name="item[]" placeholder="Wednesday">
                     </div>
                     <div class="form-group mb-2 col-md-2">
+                        <label for="" class="form-label">ថ្ងៃព្រហស្បត្ត៍:</label>
                         <input type="text" class="form-control" name="item[]" placeholder="Thursday">
                     </div>
                     <div class="form-group mb-2 col-md-2">
+                        <label for="" class="form-label">ថ្ងៃសុក្រ:</label>
                         <input type="text" class="form-control" name="item[]" placeholder="Friday">
                     </div>
-                    <div class="form-group-append col-md-2">
-                        <button class="btn btn-danger removeItem" type="button">Remove</button>
+                    <div class="form-group-append col-md-2 mt-4">
+                        <button class="btn btn-danger removeItem" type="button"><i
+                                class="fas fa-minus-square"></i></button>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-8 m-0"></div>
-                <div class="col-md-2 m-0">
-                    <button type="button" class="btn btn-primary" id="addItem">ថែមថ្មី</button>
+            <div class="row ml-2">
+                <div class="col-md-2 ml-2 mb-1">
+                    <button type="button" class="btn btn-success" id="addItem">ថែមថ្មី</button>
                 </div>
-                <div class="col-md-2 m-0">
+                <div class="col-md-7"></div>
+                <div class="col-md-2 ml-5 mb-1">
                     <input type="submit" name="submit" class="btn1 bg-sis text-white" value="រក្សាទុក">
                 </div>
             </div>
@@ -183,32 +192,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $(document).ready(function() {
         // Add new input fields
         $('#addItem').click(function() {
-            $('#itemContainer').append(`<div class="row input-group">
-                <div class="form-group mb-2 col-md-4">
-                    <input type="time" class="form-control" name="item[]" placeholder="Start Time">
-                </div>
-                <div class="form-group mb-2 col-md-4">
-                    <input type="time" class="form-control" name="item[]" placeholder="End Time">
-                </div>
-                <div class="form-group mb-2 col-md-2">
-                    <input type="text" class="form-control" name="item[]" placeholder="Monday">
-                </div>
-                <div class="form-group mb-2 col-md-2">
-                    <input type="text" class="form-control" name="item[]" placeholder="Tuesday">
-                </div>
-                <div class="form-group mb-2 col-md-2">
-                    <input type="text" class="form-control" name="item[]" placeholder="Wednesday">
-                </div>
-                <div class="form-group mb-2 col-md-2">
-                    <input type="text" class="form-control" name="item[]" placeholder="Thursday">
-                </div>
-                <div class="form-group mb-2 col-md-2">
-                    <input type="text" class="form-control" name="item[]" placeholder="Friday">
-                </div>
-                <div class="form-group-append col-md-2">
-                    <button class="btn btn-danger removeItem" type="button">Remove</button>
-                </div>
-            </div>`);
+            $('#itemContainer').append(`
+            <div class="row input-group ml-2">
+                    <div class="form-group mb-2 col-md-6">
+                        <label for="" class="form-label">ម៉ោងចូល:</label>
+                        <input type="time" class="form-control" name="item[]" placeholder="Start Time">
+                    </div>
+                    <div class="form-group mb-2 col-md-6">
+                        <label for="" class="form-label">ម៉ោងចេញ:</label>
+                        <input type="time" class="form-control" name="item[]" placeholder="End Time">
+                    </div>
+                    <div class="form-group mb-2 col-md-2">
+                        <label for="" class="form-label">ថ្ងៃច័ន្ទ:</label>
+                        <input type="text" class="form-control" name="item[]" placeholder="Monday">
+                    </div>
+                    <div class="form-group mb-2 col-md-2">
+                        <label for="" class="form-label">ថ្ងៃអង្គារ:</label>
+                        <input type="text" class="form-control" name="item[]" placeholder="Tuesday">
+                    </div>
+                    <div class="form-group mb-2 col-md-2">
+                        <label for="" class="form-label">ថ្ងៃពុធ:</label>
+                        <input type="text" class="form-control" name="item[]" placeholder="Wednesday">
+                    </div>
+                    <div class="form-group mb-2 col-md-2">
+                        <label for="" class="form-label">ថ្ងៃព្រហស្បត្ត៍:</label>
+                        <input type="text" class="form-control" name="item[]" placeholder="Thursday">
+                    </div>
+                    <div class="form-group mb-2 col-md-2">
+                        <label for="" class="form-label">ថ្ងៃសុក្រ:</label>
+                        <input type="text" class="form-control" name="item[]" placeholder="Friday">
+                    </div>
+                    <div class="form-group-append col-md-2 mt-4">
+                        <button class="btn btn-danger removeItem" type="button"><i
+                                class="fas fa-minus-square"></i></button>
+                    </div>
+                </div>`);
         });
 
         // Remove input fields

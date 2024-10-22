@@ -35,7 +35,7 @@ $attendance = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container-fluid">
         <div class="row mb-2 card-header">
             <div class="col-sm-6">
-                <h3 class="m-0">|តារាងវត្តមានប្រចាំថ្ងៃ</h3>
+                <h3 class="m-0">|តារាងវត្តមានប្រចាំថ្ងៃតាមថ្នាក់</h3>
             </div>
             <!-- /.col -->
             <div class="col-sm-6"> </div>
@@ -69,37 +69,38 @@ $attendance = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $i = 1; foreach ($attendance as $row): ?>
-                            <tr>
-                                <td><?php echo $i++ ?></td>
-                                <td><?php echo $row['Name'];?></td>
-                                <td><?php echo $row['Course_name'];?></td>
-                                <td><?php echo $row['Kh_name'];?></td>
-                                <td>
-                                    <?php
-                                // Create a DateTime object from the string
-                                $date = new DateTime($row['Date']);
-                                // Format the date to "15-Sep-2024 at 10 am"
-                                echo $date->format('d-M-Y');
-                                ?>
-                                </td>
-                                <td>
-                                    <form action="report_att.php" method="POST">
-                                        <button type="submit" name="export_pdf" title="PDF"
-                                            style="border:none; background: transparent; padding:0px;"><i
-                                                class="fa fa-file-pdf text-danger ml-1" style=" font-size: 18px;"></i>
-                                            <input type="hidden" name="classname" value="<?=$row['Name']; ?>">
-                                        </button>
-                                        <button type="submit" name="export_excel" title="Excel"
-                                            style="border:none; background: transparent; padding:0px;"><i
-                                                class="fa fa-file-excel text-success ml-2"
-                                                style=" font-size: 18px;"></i></button>
+                            <?php $i = 1;
+                            foreach ($attendance as $row): ?>
+                                <tr>
+                                    <td><?php echo $i++ ?></td>
+                                    <td><?php echo $row['Name']; ?></td>
+                                    <td><?php echo $row['Course_name']; ?></td>
+                                    <td><?php echo $row['Kh_name']; ?></td>
+                                    <td>
+                                        <?php
+                                        // Create a DateTime object from the string
+                                        $date = new DateTime($row['Date']);
+                                        // Format the date to "15-Sep-2024 at 10 am"
+                                        echo $date->format('d-M-Y');
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <form action="report_att.php" method="POST">
+                                            <button type="submit" name="export_pdf" title="PDF"
+                                                style="border:none; background: transparent; padding:0px;"><i
+                                                    class="fa fa-file-pdf text-danger ml-1" style=" font-size: 18px;"></i>
+                                                <input type="hidden" name="classname" value="<?= $row['Name']; ?>">
+                                            </button>
+                                            <button type="submit" name="export_excel" title="Excel"
+                                                style="border:none; background: transparent; padding:0px;"><i
+                                                    class="fa fa-file-excel text-success ml-2"
+                                                    style=" font-size: 18px;"></i></button>
 
 
-                                    </form>
-                                </td>
-                            </tr>
-                            <?php endforeach;?>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>

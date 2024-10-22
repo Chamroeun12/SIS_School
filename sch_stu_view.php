@@ -34,7 +34,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container-fluid">
         <div class="row mb-2 card-header">
             <div class="col-sm-6">
-                <h3 class="m-0">|បង្ហាញកាលវិភាគ</h3>
+                <h3 class="m-0">|តារាងបង្ហាញកាលវិភាគ</h3>
             </div>
         </div>
     </div>
@@ -43,10 +43,10 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="form-group m-2 card p-4">
             <div class="row">
                 <div class="col-md-4">
-                    <select name="classid" class="form-control">
+                    <select name="classid" class="form-control form-select">
                         <option value="">--ជ្រើសរើសថ្នាក់--</option>
                         <?php foreach ($class as $row) : ?>
-                            <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
+                            <option value="hh<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
                                 <?= $row['Course_name']; ?> - <?= $row['Shift']; ?> </option>
                         <?php endforeach; ?>
                     </select>
