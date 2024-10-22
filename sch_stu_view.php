@@ -46,13 +46,8 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <select name="classid" class="form-control form-select">
                         <option value="">--ជ្រើសរើសថ្នាក់--</option>
                         <?php foreach ($class as $row) : ?>
-<<<<<<< Updated upstream
-                            <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
-                                <?= $row['Course_name']; ?> - <?= $row['Shift']; ?> </option>
-=======
                         <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
                             <?= $row['Course_name']; ?> - <?= $row['Shift']; ?> </option>
->>>>>>> Stashed changes
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -79,7 +74,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- /.card-header -->
 
         <div class="card-body table-responsive p-0 text-sm mt-1">
-            <table class="table table-hover text-nowrap text-center" "
+            <table class="table table-hover table-bordered text-nowrap text-center" "
                 id=" userTbl">
                 <thead>
                     <tr>
@@ -101,9 +96,6 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <th style="width: 15%; background-color: #152550; color:white; font-size:medium;">
                             សុក្រ
                         </th>
-                        <th style="width: 15%; background-color: #152550; color:white; font-size:medium;">
-                            សៅរ៍
-                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -111,7 +103,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php $i = 1;
                         foreach ($sch as $row): ?>
                     <tr style="height: 60px;">
-                        <td class="table-secondary align-middle">
+                        <td class="table-info align-middle">
                             <?php echo date('h:i', strtotime($row['Time_in'])); ?> -
                             <?php echo date('h:i A', strtotime($row['Time_out'])); ?>
                         </td>

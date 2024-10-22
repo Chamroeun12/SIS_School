@@ -137,52 +137,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="card">
-            <div id="itemContainer" class="p-2">
-                <div class="row input-group ml-2">
-                    <div class="form-group mb-2 col-md-6">
-                        <label for="" class="form-label">ម៉ោងចូល:</label>
-                        <input type="time" class="form-control" name="item[]" placeholder="Start Time">
+            <div class="card-body">
+                <div class="row m-2">
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-success" id="addItem">ថែមថ្មី</button>
                     </div>
-                    <div class="form-group mb-2 col-md-6">
-                        <label for="" class="form-label">ម៉ោងចេញ:</label>
-                        <input type="time" class="form-control" name="item[]" placeholder="End Time">
-                    </div>
-                    <div class="form-group mb-2 col-md-2">
-                        <label for="" class="form-label">ថ្ងៃច័ន្ទ:</label>
-                        <input type="text" class="form-control" name="item[]" placeholder="Monday">
-                    </div>
-                    <div class="form-group mb-2 col-md-2">
-                        <label for="" class="form-label">ថ្ងៃអង្គារ:</label>
-                        <input type="text" class="form-control" name="item[]" placeholder="Tuesday">
-                    </div>
-                    <div class="form-group mb-2 col-md-2">
-                        <label for="" class="form-label">ថ្ងៃពុធ:</label>
-                        <input type="text" class="form-control" name="item[]" placeholder="Wednesday">
-                    </div>
-                    <div class="form-group mb-2 col-md-2">
-                        <label for="" class="form-label">ថ្ងៃព្រហស្បត្ត៍:</label>
-                        <input type="text" class="form-control" name="item[]" placeholder="Thursday">
-                    </div>
-                    <div class="form-group mb-2 col-md-2">
-                        <label for="" class="form-label">ថ្ងៃសុក្រ:</label>
-                        <input type="text" class="form-control" name="item[]" placeholder="Friday">
-                    </div>
-                    <div class="form-group-append col-md-2 mt-4">
-                        <button class="btn btn-danger removeItem" type="button"><i
-                                class="fas fa-minus-square"></i></button>
+                    <div class="col-md-8"></div>
+                    <div class="col-md-2">
+                        <input type="submit" name="submit" class="btn1 bg-sis text-white" value="រក្សាទុក">
                     </div>
                 </div>
-            </div>
 
-            <div class="row ml-2">
-                <div class="col-md-2 ml-2 mb-1">
-                    <button type="button" class="btn btn-success" id="addItem">ថែមថ្មី</button>
+            </div>
+        </div>
+        <div id="itemContainer" class="card p-2">
+
+            <div class="row input-group ml-2">
+
+                <div class="form-group mb-2 col-md-6">
+                    <label for="" class="form-label">ម៉ោងចូល:</label>
+                    <input type="time" class="form-control" name="item[]" placeholder="Start Time">
                 </div>
-                <div class="col-md-7"></div>
-                <div class="col-md-2 ml-5 mb-1">
-                    <input type="submit" name="submit" class="btn1 bg-sis text-white" value="រក្សាទុក">
+                <div class="form-group mb-2 col-md-6">
+                    <label for="" class="form-label">ម៉ោងចេញ:</label>
+                    <input type="time" class="form-control" name="item[]" placeholder="End Time">
+                </div>
+                <div class="form-group mb-2 col-md-2">
+                    <label for="" class="form-label">ថ្ងៃច័ន្ទ:</label>
+                    <input type="text" class="form-control" name="item[]" placeholder="Monday">
+                </div>
+                <div class="form-group mb-2 col-md-2">
+                    <label for="" class="form-label">ថ្ងៃអង្គារ:</label>
+                    <input type="text" class="form-control" name="item[]" placeholder="Tuesday">
+                </div>
+                <div class="form-group mb-2 col-md-2">
+                    <label for="" class="form-label">ថ្ងៃពុធ:</label>
+                    <input type="text" class="form-control" name="item[]" placeholder="Wednesday">
+                </div>
+                <div class="form-group mb-2 col-md-2">
+                    <label for="" class="form-label">ថ្ងៃព្រហស្បត្ត៍:</label>
+                    <input type="text" class="form-control" name="item[]" placeholder="Thursday">
+                </div>
+                <div class="form-group mb-2 col-md-2">
+                    <label for="" class="form-label">ថ្ងៃសុក្រ:</label>
+                    <input type="text" class="form-control" name="item[]" placeholder="Friday">
+                </div>
+                <div class="form-group-append col-md-2 mt-4">
+                    <button class="btn btn-danger removeItem" type="button"><i class="fas fa-minus-square"></i></button>
                 </div>
             </div>
+        </div>
+
+
         </div>
     </form>
 
