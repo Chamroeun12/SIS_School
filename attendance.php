@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $class_date = $_POST['class_date'];
 
         // Fetch students based on selected class
-        $sql = "SELECT tb_student.ID, tb_student.Kh_name, tb_student.Stu_code
+        $sql = "SELECT *
                 FROM tb_add_to_class
                 INNER JOIN tb_student ON tb_add_to_class.Stu_id = tb_student.ID
                 INNER JOIN tb_class ON tb_add_to_class.Class_id = tb_class.ClassID
@@ -93,16 +93,17 @@ input[type="radio"] {
 /* Create a custom label to act as the visual representation of the radio button */
 input[type="radio"]+label {
     display: inline-block;
-    width: 25px;
-    height: 25px;
-    border: 2px solid #fff;
+    width: 100px;
+    height: 30px;
+    /*  border: 2px solid #000; */
     /* Adjust the color to match the design */
-    border-radius: 50%;
     position: relative;
     cursor: pointer;
     text-align: center;
     line-height: 25px;
     font-size: 18px;
+    margin-left: -20px;
+    margin-bottom: -20px;
 }
 
 /* Styling for checked radio button (tick mark) */
@@ -141,7 +142,7 @@ th {
                 <div class="card mb-3">
                     <div class="card-body rounded-0">
                         <div class="container-fluid">
-                            <div class="row align-items-end">
+                            <div class="row align-items-end ">
                                 <div class="col-sm-5">
                                     <label for="Class_id" class="form-label">សម្រាប់ថ្នាក់</label>
                                     <select name="Class_id" id="Class_id" class="form-control" required
@@ -188,12 +189,15 @@ th {
                                 <table id="attendance-tbl" class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">ល.រ</th>
-                                            <th class="text-center">ឈ្មោះសិស្ស</th>
-                                            <th class="text-center">អត្តលេខ</th>
-                                            <th class="text-center text-success">វត្តមាន</th>
-                                            <th class="text-center text-warning">សុំច្បាប់</th>
-                                            <th class="text-center text-danger">អវត្តមាន</th>
+                                            <th class="text-center" style="width:5%;">ល.រ</th>
+                                            <th class="text-center" style="width:11%;">អត្តលេខ</th>
+                                            <th class="text-center " style="width:20%;">ឈ្មោះភាសាខ្មែរ</th>
+                                            <th class="text-center" style="width:20%;">ឈ្មោះភាសាអង់គ្លេស</th>
+                                            <th class="text-center" style="width:5%;">ភេទ</th>
+                                            <th class="text-center" style="width:15%;">ថ្ងៃខែឆ្នាំកំណើត</th>
+                                            <th class="text-center text-success" style="width:8%;">វត្តមាន</th>
+                                            <th class="text-center text-warning" style="width:8%">សុំច្បាប់</th>
+                                            <th class="text-center text-danger" style="width:8%;">អវត្តមាន</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -205,14 +209,23 @@ th {
                                                     value="<?= htmlspecialchars($student['ID'], ENT_QUOTES, 'UTF-8'); ?>">
                                                 <?= $index + 1; ?>
                                             </td>
-                                            <td class="px-2 py-1 ">
-                                                <?= htmlspecialchars($student['Kh_name'], ENT_QUOTES, 'UTF-8'); ?>
-                                            </td>
-                                            <td class="text-center px-2 py-1 ">
+                                            <td class="text-center">
                                                 <?= htmlspecialchars($student['Stu_code'], ENT_QUOTES, 'UTF-8'); ?>
                                             </td>
+                                            <td class="text-center ">
+                                                <?= htmlspecialchars($student['Kh_name'], ENT_QUOTES, 'UTF-8'); ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?= htmlspecialchars($student['En_name'], ENT_QUOTES, 'UTF-8'); ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?= htmlspecialchars($student['Gender'], ENT_QUOTES, 'UTF-8'); ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?= htmlspecialchars($student['DOB'], ENT_QUOTES, 'UTF-8'); ?>
+                                            </td>
                                             <td class="text-center px-2 py-1 text-dark-emphasis">
-                                                <div class="form-check d-flex w-100 justify-content-center">
+                                                <div class="form-check justify-content-center">
                                                     <input class="form-check-input status_check" type="radio"
                                                         id="present-<?= $index; ?>" name="status[<?= $index; ?>]"
                                                         value="1"
@@ -221,7 +234,7 @@ th {
                                                 </div>
                                             </td>
                                             <td class="text-center px-2 py-1 text-dark-emphasis ">
-                                                <div class="form-check d-flex w-100 justify-content-center">
+                                                <div class="form-check justify-content-center">
                                                     <input class="form-check-input status_check " type="radio"
                                                         id="permission-<?= $index; ?>" name="status[<?= $index; ?>]"
                                                         value="2"
@@ -230,7 +243,7 @@ th {
                                                 </div>
                                             </td>
                                             <td class="text-center px-2 py-1 text-dark-emphasis">
-                                                <div class="form-check d-flex w-100 justify-content-center">
+                                                <div class="form-check justify-content-center">
                                                     <input class="form-check-input status_check" type="radio"
                                                         id="absent-<?= $index; ?>" name="status[<?= $index; ?>]"
                                                         value="3"
@@ -238,11 +251,12 @@ th {
                                                     <label for="absent-<?= $index; ?>"></label>
                                                 </div>
                                             </td>
+
                                         </tr>
                                         <?php endforeach; ?>
                                         <?php else: ?>
                                         <tr>
-                                            <td colspan="6" class="text-center">គ្មា​នទិន្ន័យ</td>
+                                            <td colspan="9" class="text-center">គ្មា​នទិន្ន័យ</td>
                                         </tr>
                                         <?php endif; ?>
                                     </tbody>
