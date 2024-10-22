@@ -1,7 +1,5 @@
 <?php
-require('fpdf/fpdf.php'); // or use TCPDF if needed
 require 'vendors/autoload.php'; // for PhpSpreadsheet
-
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -82,44 +80,58 @@ if (isset($_POST['export_excel'])) {
     // Using TCPDF for PDF generation
     $pdf = new TCPDF();
     $pdf->SetCreator(PDF_CREATOR);
-    $pdf->SetTitle('Students Report Attendance');
+    $pdf->SetTitle('បញ្ចីវត្តមានសិស្ស');
     $pdf->AddPage();
-    $pdf->SetFont('helvetica', '', 10);
+    
+    // Adding Khmer font (ensure the font is UTF-8 encoded)
+    $fontname = TCPDF_FONTS::addTTFfont('Battambang-Regular.ttf', 'TrueTypeUnicode', '', 32);
+    $pdf->SetFont($fontname, '', 10);
 
-    // Add content to PDF
-    $html = '<h1 style="color: blue; text-align: center;">Students Report Attendance</h1>';
-    $html .= '<table border="1" cellspacing="0" cellpadding="4">
+    // Ensure UTF-8 support in the PDF
+    $pdf->SetFont($fontname, '', 12, 'Battambang-Regular.ttf', 'false');
+    $pdf->SetTextColor(0, 0, 255); // Blue color for the title
+    $pdf->Write(0, 'បញ្ចីវត្តមានសិស្ស', '', 0, 'C', true, 0, false, false, 0);
+
+    $pdf->Ln(4); // Space after title
+    
+    // Reset text color for table
+    $pdf->SetTextColor(0, 0, 0);
+    // Start table with headers
+    $html = '<table border="1" cellspacing="0" cellpadding="4">
               <tr style="background-color: powderblue;">
-                  <th style="color: blue; text-align: center;">Attendance Date</th>
-                  <th style="color: blue; text-align: center;">Student Code</th>
-                  <th style="color: blue; text-align: center;">Student Name</th>
-                  <th style="color: blue; text-align: center;">Gender</th>
-                  <th style="color: blue; text-align: center;">Class</th>
-                  <th style="color: blue; text-align: center;">Room</th>
-                  <th style="color: blue; text-align: center;">Shift</th>
-                  <th style="color: blue; text-align: center;">Attendance</th>
+                  <th style="color: blue; text-align: center;">កាលបរិច្ឆេទ</th>
+                  <th style="color: blue; text-align: center;">អត្តលេខ</th>
+                  <th style="color: blue; text-align: center;">ឈ្មោះ</th>
+                  <th style="color: blue; text-align: center;">ភេទ</th>
+                  <th style="color: blue; text-align: center;">កម្រិតសិក្សា</th>
+                  <th style="color: blue; text-align: center;">បន្ទប់</th>
+                  <th style="color: blue; text-align: center;">វេនសិក្សា</th>
+                  <th style="color: blue; text-align: center;">វត្តមាន</th>
               </tr>';
-
-    // Fill data in PDF
+    
+    // Fill table rows
     foreach ($data as $row) {
         $html .= '<tr>
-                  <td style="text-align: center;">' . htmlspecialchars($row['Date']) . '</td>
-                  <td style="text-align: center;">' . htmlspecialchars($row['Stu_code']) . '</td>
-                  <td style="text-align: center;">' . htmlspecialchars($row['En_name']) . '</td>
-                  <td style="text-align: center;">' . htmlspecialchars($row['Gender']) . '</td>
-                  <td style="text-align: center;">' . htmlspecialchars($row['Course_name']) . '</td>
-                  <td style="text-align: center;">' . htmlspecialchars($row['Name']) . '</td>
-                  <td style="text-align: center;">' . htmlspecialchars($row['Shift']) . '</td>
-                  <td style="text-align: center;">' . htmlspecialchars($row['Attendance']) . '</td>
+                  <td style="text-align: center;">' . htmlspecialchars($row['Date'], ENT_QUOTES, 'UTF-8') . '</td>
+                  <td style="text-align: center;">' . htmlspecialchars($row['Stu_code'], ENT_QUOTES, 'UTF-8') . '</td>
+                  <td style="text-align: center;">' . htmlspecialchars($row['En_name'], ENT_QUOTES, 'UTF-8') . '</td>
+                  <td style="text-align: center;">' . htmlspecialchars($row['Gender'], ENT_QUOTES, 'UTF-8') . '</td>
+                  <td style="text-align: center;">' . htmlspecialchars($row['Course_name'], ENT_QUOTES, 'UTF-8') . '</td>
+                  <td style="text-align: center;">' . htmlspecialchars($row['Name'], ENT_QUOTES, 'UTF-8') . '</td>
+                  <td style="text-align: center;">' . htmlspecialchars($row['Shift'], ENT_QUOTES, 'UTF-8') . '</td>
+                  <td style="text-align: center;">' . htmlspecialchars($row['Attendance'], ENT_QUOTES, 'UTF-8') . '</td>
               </tr>';
     }
 
-    $html .= '</table>'; 
+    $html .= '</table>';
+    
+    // Write HTML table to PDF
     $pdf->writeHTML($html, true, false, true, false, '');
-
+    
     // Output PDF with dynamic filename
     $classname_safe = preg_replace('/[^A-Za-z0-9_\-]/', '_', $classname); // Clean classname for file name
     $pdfFilename = "students_report_attendance_{$classname_safe}_" . date('Y-m-d') . ".pdf";
     $pdf->Output($pdfFilename, 'I');
     exit;
 }
+?>
