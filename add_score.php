@@ -5,6 +5,9 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Enable error reporting for PDO
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 // Fetch subjects
 $sql = "SELECT * FROM tb_sub_type ORDER BY id ASC";
 $stmt = $conn->prepare($sql);
@@ -24,8 +27,9 @@ $class_id = $_GET['class_id'];
 $sql = "SELECT * FROM tb_add_to_class ad
 INNER JOIN tb_class c ON ad.Class_id = c.ClassID
 INNER JOIN tb_student stu ON ad.Stu_id = stu.ID
-WHERE ad.Class_id = '$class_id'";
+WHERE ad.Class_id = :class_id";
 $stmt = $conn->prepare($sql);
+$stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT);
 $stmt->execute();
 $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -40,44 +44,50 @@ if (isset($_GET['class_id'])) {
 
 // Handle score submission
 if (isset($_POST['btnsave'])) {
-  $for_month = $_POST['for_month'];
-  $scores = $_POST['scorebox'];
+    $for_month = $_POST['for_month'];
+    $scores = $_POST['scorebox'];
 
-  foreach ($scores as $student_id => $student_scores) {
-      foreach ($subjects as $subject) {
-          $subject_name = $subject['name'];
-          $score = (int) $student_scores[$subject_name];
+    foreach ($scores as $student_id => $student_scores) {
+        foreach ($subjects as $subject) {
+            $subject_name = $subject['name'];
+            $score = (int) $student_scores[$subject_name];
 
-          // Prepare the SQL statement with parameters
-          $sql = "INSERT INTO tb_month_score (Stu_id, Stu_code, Class_id, Homework, Participation, Attendance, Monthly, Average, for_month, Status, Create_at)
-                  VALUES (:student_id, :class_id, :homework, :participation, :attendance, :monthly, :average, :for_month, 'Active', NOW())";
-          $stmt = $conn->prepare($sql);
+            // Prepare the SQL statement with parameters
+            $sql = "INSERT INTO tb_month_score (Stu_id, Class_id, Homework, Participation, Attendance, Monthly, Average, for_month, Status, Create_at)
+                    VALUES (:student_id, :class_id, :homework, :participation, :attendance, :monthly, :average, :for_month, 'Active', NOW())";
+            $stmt = $conn->prepare($sql);
 
-          // Bind parameters
-          $stmt->bindParam(':student_id', $student_id, PDO::PARAM_INT);
-          $stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT); // Ensure this is bound correctly
-          $homework = $score;
-          $participation = $score;
-          $attendance = $score;
-          $monthly = $score;
+            // Bind parameters
+            $stmt->bindParam(':student_id', $student_id, PDO::PARAM_INT);
+            $stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT); 
+            $homework = $score;
+            $participation = $score;
+            $attendance = $score;
+            $monthly = $score;
 
-          // Calculate the average
-          $average = ($homework * 0.40) + ($participation * 0.10) + ($attendance * 0.10) + ($monthly * 0.40);
+            // Calculate the average
+            $average = ($homework * 0.40) + ($participation * 0.10) + ($attendance * 0.10) + ($monthly * 0.40);
 
-          // Bind all necessary parameters
-          $stmt->bindParam(':homework', $homework, PDO::PARAM_STR);
-          $stmt->bindParam(':participation', $participation, PDO::PARAM_STR);
-          $stmt->bindParam(':attendance', $attendance, PDO::PARAM_STR);
-          $stmt->bindParam(':monthly', $monthly, PDO::PARAM_STR);
-          $stmt->bindParam(':average', $average, PDO::PARAM_STR);
-          $stmt->bindParam(':for_month', $for_month, PDO::PARAM_STR); // Ensure this is bound correctly
+            // Bind all necessary parameters
+            $stmt->bindParam(':homework', $homework, PDO::PARAM_STR);
+            $stmt->bindParam(':participation', $participation, PDO::PARAM_STR);
+            $stmt->bindParam(':attendance', $attendance, PDO::PARAM_STR);
+            $stmt->bindParam(':monthly', $monthly, PDO::PARAM_STR);
+            $stmt->bindParam(':average', $average, PDO::PARAM_STR);
+            $stmt->bindParam(':for_month', $for_month, PDO::PARAM_STR);
 
-          // Execute the query
-          $stmt->execute();
-      }
-  }
+            // Debug the SQL statement
+            echo $stmt->queryString; // This will output the raw SQL query for inspection
+            print_r($stmt->errorInfo()); // This will output any SQL error info
 
-  // echo "Scores saved successfully!";
+            // Execute the query
+            if (!$stmt->execute()) {
+                print_r($stmt->errorInfo()); // Check for errors here
+            } else {
+                echo "Scores saved successfully for student ID: $student_id <br>";
+            }
+        }
+    }
 }
 ?>
 
@@ -94,9 +104,7 @@ if (isset($_POST['btnsave'])) {
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Main content -->
+    </section><!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
