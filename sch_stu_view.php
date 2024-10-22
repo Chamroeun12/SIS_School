@@ -36,13 +36,11 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="col-sm-6">
                 <h3 class="m-0">|បង្ហាញកាលវិភាគ</h3>
             </div>
-            <!-- /.col -->
-            <div class="col-sm-6"> </div>
         </div>
     </div>
 
     <form action="" method="post">
-        <div class="form-group mt-2 card p-4">
+        <div class="form-group m-2 card p-4">
             <div class="row">
                 <div class="col-md-4">
                     <select name="classid" class="form-control">
@@ -69,43 +67,36 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="row m-2">
         <!-- <div class="form-group" style="width: 300px;">
                             <input type="text" id="" name="namesearch" class="search form-control float-right"
-                                placeholder="ស្វែងរក" style="font-family:Khmer OS Siemreap;">
+                                placeholder="ស្វែងរក" ">
                             <div class="input-group-append">
                             </div>
                         </div> -->
         <!-- /.card-header -->
 
         <div class="card-body table-responsive p-0 text-sm mt-1">
-            <table class="table table-hover text-nowrap text-center" style="font-family:Khmer OS Siemreap;"
-                id="userTbl">
+            <table class="table table-hover text-nowrap text-center" "
+                id=" userTbl">
                 <thead>
                     <tr>
-                        <th
-                            style="width: 10%; background-color: #152550; color:white; font-weight:bold; font-size:18px;">
+                        <th style="width: 10%; background-color: #152550; color:white; ">
                             ម៉ោងសិក្សា
                         </th>
-                        <th
-                            style="width: 15%; background-color: #152550; color:white; font-weight:bold; font-size:18px;">
+                        <th style="width: 15%; background-color: #152550; color:white; ">
                             ច័ន្ទ
                         </th>
-                        <th
-                            style="width: 15%; background-color: #152550; color:white; font-weight:bold; font-size:18px;">
+                        <th style="width: 15%; background-color: #152550; color:white; ">
                             អង្គារ
                         </th>
-                        <th
-                            style="width: 15%; background-color: #152550; color:white; font-weight:bold; font-size:18px;">
+                        <th style="width: 15%; background-color: #152550; color:white; ">
                             ពុធ
                         </th>
-                        <th
-                            style="width: 15%; background-color: #152550; color:white; font-weight:bold; font-size:18px;">
+                        <th style="width: 15%; background-color: #152550; color:white; ">
                             ព្រហស្បត្តិ៍
                         </th>
-                        <th
-                            style="width: 15%; background-color: #152550; color:white; font-weight:bold; font-size:18px;">
+                        <th style="width: 15%; background-color: #152550; color:white; ">
                             សុក្រ
                         </th>
-                        <th
-                            style="width: 15%; background-color: #152550; color:white; font-weight:bold; font-size:18px;">
+                        <th style="width: 15%; background-color: #152550; color:white; ">
                             សៅរ៍
                         </th>
                     </tr>

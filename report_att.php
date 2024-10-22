@@ -114,7 +114,7 @@ if (isset($_POST['export_excel'])) {
               </tr>';
     }
 
-    $html .= '</table>';
+    $html .= '</table>'; 
     $pdf->writeHTML($html, true, false, true, false, '');
 
     // Output PDF with dynamic filename

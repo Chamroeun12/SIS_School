@@ -425,33 +425,33 @@ function checkAll_count() {
 
 <!-- Toastr Notification Script -->
 <?php if (isset($_SESSION['message'])): ?>
-    <script>
-        $(document).ready(function() {
-            toastr.options = {
-                "closeButton": true,
-                "debug": false,
-                "newestOnTop": true,
-                "progressBar": true,
-                "positionClass": "toast-top-right",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "5000", // 5 seconds
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            };
-            if ("<?php echo $_SESSION['message_type']; ?>" === "success") {
-                toastr.success("<?php echo $_SESSION['message']; ?>");
-            } else {
-                toastr.error("<?php echo $_SESSION['message']; ?>");
-            }
-        });
-    </script>
-    <?php
+<script>
+$(document).ready(function() {
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000", // 5 seconds
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+    if ("<?php echo $_SESSION['message_type']; ?>" === "success") {
+        toastr.success("<?php echo $_SESSION['message']; ?>");
+    } else {
+        toastr.error("<?php echo $_SESSION['message']; ?>");
+    }
+});
+</script>
+<?php
     // Clear the message after displaying it
     unset($_SESSION['message']);
     unset($_SESSION['message_type']);
@@ -460,3 +460,24 @@ function checkAll_count() {
 </body>
 
 </html>
+<!-- calendar -->
+<script type="text/javascript">
+$(function() {
+    // Initialize the datetimepicker
+    $('#calendar').datetimepicker({
+        format: 'L', // Local date format (MM/DD/YYYY)
+        inline: true, // Displays the calendar inline
+        icons: {
+            time: 'far fa-clock',
+            date: 'far fa-calendar',
+            up: 'fas fa-arrow-up',
+            down: 'fas fa-arrow-down',
+            previous: 'fas fa-chevron-left',
+            next: 'fas fa-chevron-right',
+            today: 'far fa-calendar-check',
+            clear: 'far fa-trash-alt',
+            close: 'far fa-times-circle'
+        }
+    });
+});
+</script>

@@ -100,20 +100,69 @@ function getCount($conn, $table, $column) {
             </div>
 
             <!-- Chart Section -->
-            <div class="col-md-12">
-                <div class="card card-danger">
-                    <div class="card-header">
-                        <h3 class="card-title">តារាង</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <!-- Calendar -->
+                    <div class="card pb-3">
+                        <div class="card-header border-0">
+
+                            <h3 class="card-title">
+                                <i class="far fa-calendar-alt"></i>
+                                Calendar
+                            </h3>
+                            <!-- tools card -->
+                            <div class="card-tools">
+                                <!-- button with a dropdown -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn bg-sis text-white btn-sm dropdown-toggle"
+                                        data-toggle="dropdown" data-offset="-52">
+                                        <i class="fas fa-bars"></i>
+                                    </button>
+                                    <div class="dropdown-menu" role="menu">
+                                        <a href="#" class="dropdown-item">Add new event</a>
+                                        <a href="#" class="dropdown-item">Clear events</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="#" class="dropdown-item">View calendar</a>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn bg-sis text-white btn-sm" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn bg-sis text-white btn-sm" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <!-- /. tools -->
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body pt-0">
+                            <!--The calendar -->
+                            <div id="calendar" style="width: 100%"></div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- </div> -->
+                <!-- testcalenda -->
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header" style="background-color:#152550; color:white;">
+                            <h3 class="card-title">តារាង</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="donutChart"
+                                style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                    </div>
                 </div>
+                <!-- test -->
             </div>
         </div>
     </section>
@@ -122,36 +171,36 @@ function getCount($conn, $table, $column) {
 <?php include_once 'footer.php'; ?>
 
 <script>
-    // DONUT CHART - dynamically set data from PHP
-    var donutChartCanvas = $('#donutChart').get(0).getContext('2d');
-    var donutData = {
-        labels: [
-            'ចំនួនសិស្សសរុប',
-            'ចំនួនគ្រូបង្រៀនសរុប',
-            'ចំនួនថ្នាក់រៀនសរុប',
-            'ចំនួនវគ្គសិក្សាសរុប',
+// DONUT CHART - dynamically set data from PHP
+var donutChartCanvas = $('#donutChart').get(0).getContext('2d');
+var donutData = {
+    labels: [
+        'ចំនួនសិស្សសរុប',
+        'ចំនួនគ្រូបង្រៀនសរុប',
+        'ចំនួនថ្នាក់រៀនសរុប',
+        'ចំនួនវគ្គសិក្សាសរុប',
+    ],
+    datasets: [{
+        data: [
+            <?php echo $student_count; ?>,
+            <?php echo $teacher_count; ?>,
+            <?php echo $class_count; ?>,
+            <?php echo $course_count; ?>
         ],
-        datasets: [{
-            data: [
-                <?php echo $student_count; ?>,
-                <?php echo $teacher_count; ?>,
-                <?php echo $class_count; ?>,
-                <?php echo $course_count; ?>
-            ],
-            backgroundColor: ['#17a2b8', '#dc3545', '#28a745', '#6f42c1'],
-        }]
-    };
-    var donutOptions = {
-        maintainAspectRatio: false,
-        responsive: true,
-    };
+        backgroundColor: ['#17a2b8', '#dc3545', '#28a745', '#6f42c1'],
+    }]
+};
+var donutOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+};
 
-    // Create doughnut chart
-    new Chart(donutChartCanvas, {
-        type: 'doughnut',
-        data: donutData,
-        options: donutOptions
-    });
+// Create doughnut chart
+new Chart(donutChartCanvas, {
+    type: 'doughnut',
+    data: donutData,
+    options: donutOptions
+});
 </script>
 
 <?php include_once 'footer.php'; ?>
