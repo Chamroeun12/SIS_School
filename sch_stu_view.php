@@ -46,8 +46,13 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <select name="classid" class="form-control form-select">
                         <option value="">--ជ្រើសរើសថ្នាក់--</option>
                         <?php foreach ($class as $row) : ?>
+<<<<<<< Updated upstream
                             <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
                                 <?= $row['Course_name']; ?> - <?= $row['Shift']; ?> </option>
+=======
+                        <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
+                            <?= $row['Course_name']; ?> - <?= $row['Shift']; ?> </option>
+>>>>>>> Stashed changes
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -103,25 +108,25 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </thead>
                 <tbody>
                     <?php if (isset($sch)) { ?>
-                        <?php $i = 1;
+                    <?php $i = 1;
                         foreach ($sch as $row): ?>
-                            <tr style="height: 60px;">
-                                <td class="table-secondary align-middle">
-                                    <?php echo date('h:i', strtotime($row['Time_in'])); ?> -
-                                    <?php echo date('h:i A', strtotime($row['Time_out'])); ?>
-                                </td>
-                                <!-- <td><?php echo $row['Time_in']; ?>:<?php echo $row['Time_out']; ?></td> -->
-                                <td class="align-middle">
-                                    <div class="day">
-                                        <?php echo $row['Monday']; ?>
-                                    </div>
-                                </td>
-                                <td class="align-middle"><?php echo $row['Tuesday']; ?></td>
-                                <td class="align-middle"><?php echo $row['Wednesday']; ?></td>
-                                <td class="align-middle"><?php echo $row['Thursday']; ?></td>
-                                <td class="align-middle"><?php echo $row['Friday']; ?></td>
-                                <td class="align-middle">
-                                    <!-- <form action="report_sch.php" method="POST">
+                    <tr style="height: 60px;">
+                        <td class="table-secondary align-middle">
+                            <?php echo date('h:i', strtotime($row['Time_in'])); ?> -
+                            <?php echo date('h:i A', strtotime($row['Time_out'])); ?>
+                        </td>
+                        <!-- <td><?php echo $row['Time_in']; ?>:<?php echo $row['Time_out']; ?></td> -->
+                        <td class="align-middle">
+                            <div class="day">
+                                <?php echo $row['Monday']; ?>
+                            </div>
+                        </td>
+                        <td class="align-middle"><?php echo $row['Tuesday']; ?></td>
+                        <td class="align-middle"><?php echo $row['Wednesday']; ?></td>
+                        <td class="align-middle"><?php echo $row['Thursday']; ?></td>
+                        <td class="align-middle"><?php echo $row['Friday']; ?></td>
+                        <td class="align-middle">
+                            <!-- <form action="report_sch.php" method="POST">
                                         <button type="submit" name="export_pdf" title="PDF"
                                             style="border:none; background: transparent; padding:0px;"><i
                                                 class="fa fa-file-pdf text-danger ml-1" style=" font-size: 18px;"></i>
@@ -134,9 +139,9 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
                                     </form> -->
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
                     <?php } else {
                         echo '<tr><td colspan="7" style="text-align:center;" class="text-danger"><p>គ្មានទិន្នន័យ</p></td></tr>';
                     } ?>

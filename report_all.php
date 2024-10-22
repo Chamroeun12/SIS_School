@@ -90,7 +90,7 @@ if (isset($_POST['export_excel'])) {
     $pdf->SetCreator(PDF_CREATOR);
     $pdf->SetTitle('Students Report Attendance');
     $pdf->AddPage();
-    $pdf->SetFont('helvetica', '', 10);
+    $pdf->SetFont('Battambang-Regular.ttf', '', 10);
 
     // Add content to PDF
     $html = '<h1 style="color: blue; text-align: center;">Students Report Attendance</h1>';
