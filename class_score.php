@@ -121,7 +121,6 @@ table th {
     <div class="row m-2">
         <div class="col-12">
             <div class="card">
-
                 <div class="card-body table-responsive p-0 text-sm">
                     <table class="table-bordered table-hover table" id="userTbl">
                         <thead class=" table-secondary">
@@ -132,7 +131,7 @@ table th {
                                 <th style=" font-size:16px;">ភេទ</th>
                                 <th style=" font-size:16px;">កិច្ចការផ្ទះ</th>
                                 <th style=" font-size:16px; ">ការចូលរួម</th>
-                                <th style=" font-size:16px;">វត្តមាន</th>​
+                                <th style=" font-size:16px;">វត្តមាន</th>
                                 <th style=" font-size:16px;">ប្រចាំខែ</th>
                                 <th style=" font-size:16px;">មធ្យមភាគ</th>
                                 <th style=" font-size:16px;">ផ្សេងៗ</th>

@@ -274,7 +274,7 @@ if (isset($_POST['btnpdft2'])) {
 
                                     <div class="info-box-content">
                                         <span class="info-box-text text-center">របាយការណ៍សិស្ស</span>
-                                        <a href="total_teacher.php" class="btn btn-danger btn-sm">ទាញយកជា ​pdf</a>
+                                        <a href="total_teacher.php" class="btn btn-danger btn-sm">ទាញយកជា pdf</a>
                                         </a>
                                     </div>
                                     <!-- /.info-box-content -->
