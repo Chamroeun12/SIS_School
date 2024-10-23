@@ -8,24 +8,15 @@ $sql = "SELECT
     r.Name,
     co.Course_name,
     t.Kh_name,
-    att.Date,
-    c.ClassID
+    c.ClassID,
+    c.Shift
 FROM
-    tb_attendance att
-INNER JOIN
-    tb_class c ON att.Class_id = c.ClassID
+    tb_class c
 INNER JOIN
     tb_course co ON c.course_id = co.id
 INNER JOIN
     tb_teacher t ON c.Teacher_id = t.id
-INNER JOIN tb_classroom r ON c.room_id = r.id
-GROUP BY
-    r.Name,
-    co.Course_name,
-    t.En_name,
-    att.Date
-ORDER BY
-    att.Date;";
+INNER JOIN tb_classroom r ON c.room_id = r.id";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $attendance = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -77,14 +68,7 @@ $attendance = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo $row['Name']; ?></td>
                                 <td><?php echo $row['Course_name']; ?></td>
                                 <td><?php echo $row['Kh_name']; ?></td>
-                                <td>
-                                    <?php
-                                        // Create a DateTime object from the string
-                                        $date = new DateTime($row['Date']);
-                                        // Format the date to "15-Sep-2024 at 10 am"
-                                        echo $date->format('d-M-Y');
-                                        ?>
-                                </td>
+                                <td><?php echo $row['Shift']; ?></td>
                                 <td>
                                     <form action="" method="">
                                         <a href="class_att.php?classatt=<?php echo $row['ClassID'] ?>">
