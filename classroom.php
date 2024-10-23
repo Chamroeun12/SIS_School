@@ -275,14 +275,11 @@ include_once "header.php";
                                     <?php } ?>
                                 </td>
                                 <td>
-                                    <form action="report_data.php" method="POST">
-                                        <a href="class_details.php?classroom=<?php echo $row['ClassID'] ?>">
-                                            <i class="fa fa-file-pdf text-danger" style=" font-size: 18px;"></i>
+                                    <form action="" method="">
+                                        <a href="class_details.php?classroom=<?php echo $row['ClassID'] ?>"><i
+                                                class="fa fa-file-download text-info" style=" font-size: 18px;"></i>
+
                                         </a>
-                                        <button type="submit" name="export_excel" title="Excel"
-                                            style="border:none; background: transparent; padding:0px;"><i
-                                                class="fa fa-file-excel text-success ml-1"
-                                                style=" font-size: 18px;"></i></button>
 
                                         <span class="dropstart">
                                             <i class="nav-icon fas fa-ellipsis-v text-info ml-2" style=" font-size:

@@ -1,5 +1,4 @@
-<?php
-require('fpdf/fpdf.php');  // For PDF generation
+<?php // For PDF generation
 require 'vendors/autoload.php'; // Autoloader for PhpSpreadsheet
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx; // Xlsx for better compatibility
@@ -76,47 +75,4 @@ if (isset($_POST['export_excel'])) {
     header('Cache-Control: max-age=0');
     $writer->save('php://output');
     exit; // Exit after outputting the file
-} elseif (isset($_POST['export_pdf'])) {
-    // Create a new PDF document using TCPDF
-    $pdf = new TCPDF();
-    $pdf->SetTitle('Students In Class');
-    $pdf->SetCreator(PDF_CREATOR);
-
-    $pdf->AddPage();
-    $fontname = TCPDF_FONTS::addTTFfont('Battambang-Regular.ttf', 'TrueTypeUnicode', '', 96);
-$pdf->SetFont($fontname, '', 10);
-    // $pdf->SetFont('Battambang-Regular.ttf', '', 10);
-
-    // Add content to PDF
-    $html = '<h1 style="color: #151515; text-align: center;">Students In Class</h1>';
-    $html .= '<table border="1" cellspacing="0" cellpadding="4">
-              <tr style="background-color: #152550;">
-                  <th style="color: white; text-align: center;">Student Name</th>
-                  <th style="color: white; text-align: center;">Gender</th>
-                  <th style="color: white; text-align: center;">DOB</th>
-                  <th style="color: white; text-align: center;">Class Name</th>
-                  <th style="color: white; text-align: center;">Course Name</th>
-                  <th style="color: white; text-align: center;">Shift</th>
-                  <th style="color: white; text-align: center;">Teacher Name</th>
-                  <th style="color: white; text-align: center;">Phone</th>
-              </tr>';
-
-    foreach ($data as $row) {
-        $html .= '<tr>
-                  <td style="text-align: center; font-size:12px;">' . htmlspecialchars($row['Student_Name']) . '</td>
-                  <td style="text-align: center; font-size:12pxb;">' . htmlspecialchars($row['Gender']) . '</td>
-                  <td style="text-align: center; font-size:12px;">' . htmlspecialchars($row['DOB']) . '</td>
-                  <td style="text-align: center; font-size:12px;">' . htmlspecialchars($row['Name']) . '</td>
-                  <td style="text-align: center; font-size:12px;">' . htmlspecialchars($row['Course_name']) . '</td>
-                  <td style="text-align: center; font-size:12px;">' . htmlspecialchars($row['Shift']) . '</td>
-                  <td style="text-align: center; font-size:12px;">' . htmlspecialchars($row['Teacher_Name']) . '</td>
-                  <td style="text-align: center; font-size:12px;">' . htmlspecialchars($row['Phone']) . '</td>
-              </tr>';
-    }
-
-    $html .= '</table>';
-    $pdf->writeHTML($html, true, false, true, false, '');
-    $pdf->Output('students_report.pdf', 'I'); // Output PDF inline
-    exit; // Exit after outputting the file
-}
-?>
+}?>
