@@ -49,7 +49,7 @@ $score = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <th style="background-color:#152550; color:white;">គ្រូបង្រៀន</th>
                                 <th style="background-color:#152550; color:white;">វគ្គសិក្សា</th>
                                 <th style="background-color:#152550; color:white;">វេនសិក្សា</th>
-                                <th style="background-color:#152550; color:white;">ទាញយក</th>
+                                <th style="background-color:#152550; color:white;">សកម្មភាព</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,17 +61,11 @@ $score = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo $row['Kh_name']; ?></td>
                                 <td><?php echo $row['Course_name']; ?></td>
                                 <td><?php echo $row['Shift']; ?></td>
-                                <td>
-                                    <form action="report_score.php" method="POST">
-                                        <a href="class_score.php?classscore=<?php echo $row['ClassID'] ?>">
-                                            <i class="fa fa-file-pdf text-danger" style=" font-size: 18px;"></i>
+                                <td class="">
+                                    <form action="" method="">
+                                        <a href="class_score.php?classscore=<?php echo $row['ClassID'] ?>"><i
+                                                class="fa fa-file-download " style=" font-size: 18px;"></i> ទាញយក
                                         </a>
-                                        <button type="submit" name="export_excel" title="Excel"
-                                            style="border:none; background: transparent; padding:0px;"><i
-                                                class="fa fa-file-excel text-success ml-2"
-                                                style=" font-size: 18px;"></i></button>
-
-
                                     </form>
                                 </td>
                             </tr>

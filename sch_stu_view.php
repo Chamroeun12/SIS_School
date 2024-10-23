@@ -39,8 +39,8 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <div class="print-only text-center">
-        <h3>Teaching Scedule</h3>
+    <div class="print-only text-center mt-4">
+        <h3>កាលវិភាគប្រចាំសប្តាហ៍</h3>
         <h5>Morning Scedule</h5>
     </div>
     <form action="" method="post">

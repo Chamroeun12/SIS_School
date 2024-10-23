@@ -1,13 +1,15 @@
 <?php
 include_once 'connection.php';
+require 'vendors/autoload.php'; // Autoloader for PhpSpreadsheet
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-
 if(isset($_GET['classatt'])){
     $classatt = $_GET['classatt'];
-    // echo $classname;
     $query = "SELECT stu.En_name,
                 stu.Kh_name,
                 stu.Stu_code,
@@ -29,26 +31,60 @@ if(isset($_GET['classatt'])){
                   INNER JOIN tb_teacher t ON c.Teacher_id = t.id
                   INNER JOIN tb_course co ON c.course_id = co.id
                   INNER JOIN tb_classroom r ON c.room_id = r.id
-WHERE Class_id =:classatt";
-$stmt = $conn->prepare($query);
-$stmt->bindParam(':classatt', $classatt, PDO::PARAM_INT);
-$stmt->execute();
-$Class = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    WHERE Class_id = :classatt";
+    
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':classatt', $classatt, PDO::PARAM_INT);
+    $stmt->execute();
+    $Class = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+if (isset($_POST['export_excel'])) {
+    // Create a new Spreadsheet object
+    $spreadsheet = new Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+
+    // Set column headers
+    $headers = ['Student Code', 'Kh Name', 'Gender', 'DOB', 'Phone', 'Attendance'];
+    $column = 'A';
+    foreach ($headers as $header) {
+        $sheet->setCellValue($column . '1', $header);
+        $column++;
+    }
+
+    // Populate rows with data
+    $rowCount = 2;
+    foreach ($Class as $row) {
+        $sheet->setCellValue('A' . $rowCount, $row['Stu_code']);
+        $sheet->setCellValue('B' . $rowCount, $row['Kh_name']);
+        $sheet->setCellValue('C' . $rowCount, $row['Gender']);
+        $sheet->setCellValue('D' . $rowCount, $row['DOB']);
+        $sheet->setCellValue('E' . $rowCount, $row['Phone']);
+        $sheet->setCellValue('F' . $rowCount, $row['Attendance']);
+        $rowCount++;
+    }
+
+    // Set the headers for the Excel file download
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename="attendance_list.xlsx"');
+    header('Cache-Control: max-age=0');
+
+    // Create an Xlsx writer and output the spreadsheet to the browser
+    $writer = new Xlsx($spreadsheet);
+    $writer->save('php://output');
+    exit; // Exit to prevent further output
+}
 
 include_once "header.php";
 ?>
 
+<!-- Styles for print view (unchanged) -->
 <style>
 @media print {
-
-    /* Hide footer */
     footer {
         display: none;
     }
 
-    /* Ensure table borders and background colors are printed */
     table {
         border-collapse: collapse;
     }
@@ -56,48 +92,49 @@ include_once "header.php";
     th,
     td {
         border: 1px solid black !important;
-        /* Set borders to black */
         color: black !important;
-        /* Set text color to black */
     }
 
-    /* Set specific table header background */
     thead {
         background-color: darkblue !important;
-        /* Ensure background is printed */
     }
 
-    /* Adjust padding for better print layout */
     th,
     td {
         padding: 10px;
     }
 
-    /* Hide any unnecessary buttons or elements */
     .btn1,
     .card-title {
         display: none;
     }
 }
 
-/* Optional: Add color back to the web page (non-print view) */
 table th {
     background-color: #000;
-    /* You can use this to maintain original design */
 }
 </style>
 
 <div class="">
     <h3 class="card-title float-sm-right pr-4 pt-4">
-        <button type="button" class="btn1 bg-sis text-white" onclick="window.print()"><i class="fa fa-print"></i>
-            ទាញយក</button>
+        <button type="button" class="btn bg-danger text-white" onclick="window.print()">
+            <i class="fa fa-print"></i> ទាញយក
+        </button>
     </h3>
+
+    <!-- Form for exporting to Excel -->
+    <form method="post" class="float-sm-right pr-4 pt-4">
+        <button type="submit" name="export_excel" class="btn bg-success text-white">
+            <i class="fa fa-file-excel "></i> Excel
+        </button>
+    </form>
 </div>
 
-
+<!-- Content Section (Unchanged) -->
 <section class="content-wrapper">
     <div class="row pt-4">
-        <div class="col-sm-4"> <?php if (!empty($Class)) { ?>
+        <div class="col-sm-4">
+            <?php if (!empty($Class)) { ?>
             <div class="ml-3">
                 <tr>បន្ទប់ <?php echo htmlspecialchars($Class[0]['Name']); ?> - កម្រិតសិក្សា
                     <?php echo htmlspecialchars($Class[0]['Course_name']); ?></tr>
@@ -116,7 +153,7 @@ table th {
             </div>
             <?php } ?>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-5">
             <h3 class="text-center">បញ្ជីវត្តមានសិស្ស</h3>
         </div>
     </div>
@@ -125,18 +162,17 @@ table th {
     <div class="row m-2">
         <div class="col-12">
             <div class="card">
-
                 <div class="card-body table-responsive p-0 text-sm">
                     <table class="table-bordered table-hover table" id="userTbl">
-                        <thead class=" table-secondary">
-                            <tr class="">
+                        <thead class="table-secondary">
+                            <tr>
                                 <th style=" font-size:16px;">ល.រ</th>
                                 <th style=" font-size:16px;">អត្តលេខ</th>
                                 <th style=" font-size:16px;">ឈ្មោះ</th>
                                 <th style=" font-size:16px;">ភេទ</th>
                                 <th style=" font-size:16px;">ថ្ងៃខែឆ្នាំកំណើត</th>
                                 <th style=" font-size:16px;">លេខទូរស័ព្ទ</th>
-                                <th style="font-size:16px;">វត្តមាន</th>
+                                <th style=" font-size:16px;">វត្តមាន</th>
                                 <th style=" font-size:16px;">ផ្សេងៗ</th>
                             </tr>
                         </thead>
@@ -151,7 +187,6 @@ table th {
                                 <td><?php echo htmlspecialchars($row['Phone']); ?></td>
                                 <td><?php echo htmlspecialchars($row['Attendance']); ?></td>
                                 <td></td>
-
                             </tr>
                             <?php } ?>
                         </tbody>
