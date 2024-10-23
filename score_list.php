@@ -4,7 +4,7 @@ include_once 'connection.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-$sql = "SELECT r.Name, t.Kh_name, co.Course_name, c.Shift FROM tb_class c
+$sql = "SELECT r.Name, t.Kh_name, co.Course_name, c.Shift, c.ClassID FROM tb_class c
 		INNER JOIN tb_teacher t ON c.Teacher_id = t.id
 		INNER JOIN tb_course co ON c.course_id = co.id
         INNER JOIN tb_classroom r ON c.room_id = r.id
@@ -55,28 +55,26 @@ $score = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <tbody>
                             <?php $i = 1;
                             foreach ($score as $row): ?>
-                                <tr>
-                                    <td><?php echo $i++ ?></td>
-                                    <td><?php echo $row['Name']; ?></td>
-                                    <td><?php echo $row['Kh_name']; ?></td>
-                                    <td><?php echo $row['Course_name']; ?></td>
-                                    <td><?php echo $row['Shift']; ?></td>
-                                    <td>
-                                        <form action="report_score.php" method="POST">
-                                            <button type="submit" name="export_pdf" title="PDF"
-                                                style="border:none; background: transparent; padding:0px;"><i
-                                                    class="fa fa-file-pdf text-danger ml-1" style=" font-size: 18px;"></i>
-                                                <input type="hidden" name="classname" value="<?= $row['Name']; ?>">
-                                            </button>
-                                            <button type="submit" name="export_excel" title="Excel"
-                                                style="border:none; background: transparent; padding:0px;"><i
-                                                    class="fa fa-file-excel text-success ml-2"
-                                                    style=" font-size: 18px;"></i></button>
+                            <tr>
+                                <td><?php echo $i++ ?></td>
+                                <td><?php echo $row['Name']; ?></td>
+                                <td><?php echo $row['Kh_name']; ?></td>
+                                <td><?php echo $row['Course_name']; ?></td>
+                                <td><?php echo $row['Shift']; ?></td>
+                                <td>
+                                    <form action="report_score.php" method="POST">
+                                        <a href="class_score.php?classscore=<?php echo $row['ClassID'] ?>">
+                                            <i class="fa fa-file-pdf text-danger" style=" font-size: 18px;"></i>
+                                        </a>
+                                        <button type="submit" name="export_excel" title="Excel"
+                                            style="border:none; background: transparent; padding:0px;"><i
+                                                class="fa fa-file-excel text-success ml-2"
+                                                style=" font-size: 18px;"></i></button>
 
 
-                                        </form>
-                                    </td>
-                                </tr>
+                                    </form>
+                                </td>
+                            </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>

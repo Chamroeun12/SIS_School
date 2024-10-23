@@ -107,7 +107,7 @@ if (isset($_POST['btnexcel1'])) {
     // Save Excel file
     $writer = new Xlsx($spreadsheet);
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment; filename="Report Students.xlsx"');
+    header('Content-Disposition: attachment; filename="Report Teacher.xlsx"');
     $writer->save('php://output');
     exit;
 }
@@ -242,8 +242,8 @@ if (isset($_POST['btnpdft2'])) {
 
                                     <div class="info-box-content">
                                         <span class="info-box-text text-center">របាយការណ៍សិស្ស</span>
-                                        <input type="submit" value="ទាញយកជា​ pdf" name="btnpdft"
-                                            class="btn btn-danger btn-sm">
+                                        <a href="total_student.php" class="btn btn-danger btn-sm">ទាញយកជា ​pdf</a>
+                                        </a>
                                     </div>
                                     <!-- /.info-box-content -->
                                 </div>
@@ -273,9 +273,9 @@ if (isset($_POST['btnpdft2'])) {
                                             class="fas fa-file-download"></i></span>
 
                                     <div class="info-box-content">
-                                        <span class="info-box-text text-center">របាយការណ៍គ្រូ</span>
-                                        <input type="submit" value="ទាញយកជា​ pdf" name="btnpdft1"
-                                            class="btn btn-danger btn-sm">
+                                        <span class="info-box-text text-center">របាយការណ៍សិស្ស</span>
+                                        <a href="total_teacher.php" class="btn btn-danger btn-sm">ទាញយកជា ​pdf</a>
+                                        </a>
                                     </div>
                                     <!-- /.info-box-content -->
                                 </div>
