@@ -60,10 +60,11 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="col-md-2">
                     <input type="submit" class="btn1 bg-sis text-white" name="save" id="save" value="បង្ហាញ"
                         class="form-control">
-                    <h3 class="float-right">
+                    <div class="float-right mr-3">
                         <!-- Print button (not to be printed) -->
-                        <button class="no-print btn1 bg-sis text-white text-sm" onclick="printPage()">Print</button>
-                    </h3>
+                        <button class="no-print btn1 bg-sis text-white" onclick="printPage()"><i
+                                class="fas fa-print"></i> ទាញយក</button>
+                    </div>
 
                 </div>
             </div>
@@ -78,7 +79,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 id=" userTbl">
                 <thead>
                     <tr class="on-print">
-                        <th style="width: 10%; background-color: #152550; color:white; font-size:medium;">
+                        <th style="width: 15%; background-color: #152550; color:white; font-size:medium;">
                             ម៉ោងសិក្សា
                         </th>
                         <th style="width: 15%; background-color: #152550; color:white; font-size:medium;">
@@ -120,6 +121,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     </tr>
                     <?php endforeach; ?>
+
                     <?php } else {
                         echo '<tr><td colspan="7" style="text-align:center;" class="text-danger"><p>គ្មានទិន្នន័យ</p></td></tr>';
                     } ?>

@@ -55,69 +55,74 @@ $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
 
     <style>
-    aside a p {
-        color: #fff;
-    }
+        aside a p {
+            color: #fff;
+        }
 
-    aside a i {
-        color: #fff;
-    }
+        aside a i {
+            color: #fff;
+        }
 
-    .stu-list {
-        color: #152550;
-    }
+        .stu-list {
+            color: #152550;
+        }
 
-    .btnhover1:hover {
-        background: #5b6684;
-        color: #fff;
-    }
+        .btnhover1:hover {
+            background: #5b6684;
+            color: #fff;
+        }
 
-    .btnhover1:active {
-        background: #5b6684;
-        color: #fff;
-    }
+        .btnhover1:active {
+            background: #5b6684;
+            color: #fff;
+        }
 
-    .bimg {
-        border-top: 1px solid #5b6684;
-        border-bottom: 1px solid #5b6684;
-    }
+        .bimg {
+            border-top: 1px solid #5b6684;
+            border-bottom: 1px solid #5b6684;
+        }
 
-    .bg-sis {
-        background-color: #152550;
-    }
+        .bg-sis {
+            background-color: #152550;
+        }
 
-    .btn1 {
-        padding: 6px 10px;
-        border-radius: 5px;
-    }
+        .btn1 {
+            padding: 6px 10px;
+            border-radius: 5px;
+        }
 
-    .bg-sis {
-        background-color: #152550;
-    }
+        .bg-sis {
+            background-color: #152550;
+        }
     </style>
 
     <style>
-    @media print {
-        .no-print {
-            display: none !important;
-        }
+        @media print {
+            .on-prit {
+                color: black;
+                background-color: white;
+            }
 
-        @page {
-            size: A4 landscape;
+            .no-print {
+                display: none !important;
+            }
+
+            @page {
+                size: A4 landscape;
+            }
+
+            .print-only {
+                display: block !important;
+            }
         }
 
         .print-only {
-            display: block !important;
+            display: none;
         }
-    }
 
-    .print-only {
-        display: none;
-    }
-
-    .no-print {
-        display: block;
-    }
+        .no-print {
+            display: block;
+        }
     </style>
 
 </head>
@@ -195,131 +200,131 @@ $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
                with font-awesome or any other icon font library -->
 
                         <?php if ($_SESSION['role'] == 'admin'): ?>
-                        <li class="nav-item ">
-                            <a href="index.php"
-                                class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'index.php') echo 'active'; ?>||<?php if (isset($uriSegments[2]) && $uriSegments[2] == './') echo 'active'; ?></a>">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    ទំព័រដើម
-                                </p>
-                            </a>
-                        </li>
+                            <li class="nav-item ">
+                                <a href="index.php"
+                                    class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'index.php') echo 'active'; ?>||<?php if (isset($uriSegments[2]) && $uriSegments[2] == './') echo 'active'; ?></a>">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        ទំព័រដើម
+                                    </p>
+                                </a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a href="student_list.php"
-                                class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'student_list.php') echo 'active'; ?>">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    ព័ត៌មានផ្ទាល់ខ្លួនសិស្ស
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="teacher_list.php"
-                                class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'teacher_list.php') echo 'active'; ?>">
-                                <i class="nav-icon fas fa-user-tie"></i>
-                                <p>
-                                    ព័ត៌មានគ្រូបង្រៀន
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="subject.php"
-                                class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'subject.php') echo 'active'; ?>">
-                                <i class="nav-icon fas fa-graduation-cap"></i>
-                                <p>
-                                    មុខវិជ្ជាសិក្សា
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="tbl_course.php"
-                                class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'tbl_course.php') echo 'active'; ?>">
-                                <i class="nav-icon fas fa-book"></i>
-                                <p>
-                                    កម្រិតសិក្សា
-                                </p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="student_list.php"
+                                    class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'student_list.php') echo 'active'; ?>">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        ព័ត៌មានផ្ទាល់ខ្លួនសិស្ស
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="teacher_list.php"
+                                    class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'teacher_list.php') echo 'active'; ?>">
+                                    <i class="nav-icon fas fa-user-tie"></i>
+                                    <p>
+                                        ព័ត៌មានគ្រូបង្រៀន
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="subject.php"
+                                    class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'subject.php') echo 'active'; ?>">
+                                    <i class="nav-icon fas fa-graduation-cap"></i>
+                                    <p>
+                                        មុខវិជ្ជាសិក្សា
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="tbl_course.php"
+                                    class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'tbl_course.php') echo 'active'; ?>">
+                                    <i class="nav-icon fas fa-book"></i>
+                                    <p>
+                                        កម្រិតសិក្សា
+                                    </p>
+                                </a>
+                            </li>
 
-                        <li
-                            class="nav-item <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'room.php') echo 'menu-open'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'classroom.php') echo 'menu-open'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'class.php') echo 'menu-open'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'Student_in_class.php') echo 'menu-open'; ?>">
-                            <a href="#"
-                                class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'room.php') echo 'active'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'classroom.php') echo 'active'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'class.php') echo 'active'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'Student_in_class.php') echo 'active'; ?>">
-                                <i class="nav-icon fas fa-warehouse"></i>
-                                <p>
-                                    ថ្នាក់រៀន
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview ">
-                                <li class=" nav-item ">
-                                    <a href=" room.php"
-                                        class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'room.php') echo 'active'; ?>">
-                                        <p class="stu-list text-white pl-3">
-                                            <i class="fas fa-circle text-white" style="font-size:10px;"></i>
-                                            បញ្ជីបន្ទប់សិក្សា
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="nav nav-treeview ">
-                                <li class="nav-item">
-                                    <a href="classroom.php"
-                                        class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'classroom.php') echo 'active'; ?>">
-                                        <p class="stu-list text-white pl-3">
-                                            <i class="fas fa-circle text-white" style="font-size:10px;"></i>
-                                            បញ្ជីថ្នាក់រៀន
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="class.php"
-                                        class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'class.php') echo 'active'; ?>">
-                                        <p class="stu-list text-white pl-3">
-                                            <i class="fas fa-circle text-white" style="font-size:10px;"></i>
-                                            បញ្ចូលសិស្សទៅក្នុងថ្នាក់
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="nav nav-treeview ">
-                                <li class="nav-item">
-                                    <a href="Student_in_class.php"
-                                        class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'Student_in_class.php') echo 'active'; ?>">
-                                        <p class="stu-list text-white pl-3">
-                                            <i class="fas fa-circle text-white" style="font-size:10px;"></i>
-                                            សិស្សក្នុងថ្នាក់រៀន
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
+                            <li
+                                class="nav-item <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'room.php') echo 'menu-open'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'classroom.php') echo 'menu-open'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'class.php') echo 'menu-open'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'Student_in_class.php') echo 'menu-open'; ?>">
+                                <a href="#"
+                                    class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'room.php') echo 'active'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'classroom.php') echo 'active'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'class.php') echo 'active'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'Student_in_class.php') echo 'active'; ?>">
+                                    <i class="nav-icon fas fa-warehouse"></i>
+                                    <p>
+                                        ថ្នាក់រៀន
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview ">
+                                    <li class=" nav-item ">
+                                        <a href=" room.php"
+                                            class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'room.php') echo 'active'; ?>">
+                                            <p class="stu-list text-white pl-3">
+                                                <i class="fas fa-circle text-white" style="font-size:10px;"></i>
+                                                បញ្ជីបន្ទប់សិក្សា
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-treeview ">
+                                    <li class="nav-item">
+                                        <a href="classroom.php"
+                                            class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'classroom.php') echo 'active'; ?>">
+                                            <p class="stu-list text-white pl-3">
+                                                <i class="fas fa-circle text-white" style="font-size:10px;"></i>
+                                                បញ្ជីថ្នាក់រៀន
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="class.php"
+                                            class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'class.php') echo 'active'; ?>">
+                                            <p class="stu-list text-white pl-3">
+                                                <i class="fas fa-circle text-white" style="font-size:10px;"></i>
+                                                បញ្ចូលសិស្សទៅក្នុងថ្នាក់
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-treeview ">
+                                    <li class="nav-item">
+                                        <a href="Student_in_class.php"
+                                            class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'Student_in_class.php') echo 'active'; ?>">
+                                            <p class="stu-list text-white pl-3">
+                                                <i class="fas fa-circle text-white" style="font-size:10px;"></i>
+                                                សិស្សក្នុងថ្នាក់រៀន
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
 
-                        </li>
+                            </li>
                         <?php endif; ?>
                         <!-- close  -->
 
                         <?php if ($_SESSION['role'] == 'admin'): ?>
-                        <li class="nav-item">
-                            <a href="score_list.php"
-                                class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'score_list.php') echo 'active'; ?>">
-                                <i class="nav-icon fas fa-database"></i>
-                                <p>
-                                    លទ្ធផលពិន្ទុ
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="attendace_list.php"
-                                class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'attendace_list.php') echo 'active'; ?> ">
-                                <i class="nav-icon fas fa-tasks"></i>
-                                <p>
-                                    បញ្ជីវត្តមានសិក្សា
-                                </p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="score_list.php"
+                                    class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'score_list.php') echo 'active'; ?>">
+                                    <i class="nav-icon fas fa-database"></i>
+                                    <p>
+                                        លទ្ធផលពិន្ទុ
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="attendace_list.php"
+                                    class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'attendace_list.php') echo 'active'; ?> ">
+                                    <i class="nav-icon fas fa-tasks"></i>
+                                    <p>
+                                        បញ្ជីវត្តមានសិក្សា
+                                    </p>
+                                </a>
+                            </li>
                         <?php endif; ?>
 
                         <!-- User page -->
@@ -327,176 +332,176 @@ $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
                         <?php if ($_SESSION['role'] == 'user'): ?>
 
-                        <li
-                            class="nav-item <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'Classlist.php') echo 'menu-open'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'score_list.php') echo 'menu-open'; ?> ">
-                            <a href="#"
-                                class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'Classlist.php') echo 'active'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'score_list.php') echo 'active'; ?> ">
-                                <i class="nav-icon fas fa-chart-bar"></i>
-                                <p>
-                                    ពិន្ទុ
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview ">
-                                <li class="nav-item">
-                                    <a href="Classlist.php"
-                                        class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'Classlist.php') echo 'active'; ?> ">
-                                        <p class="stu-list text-white pl-3">
-                                            <i class="fas fa-circle text-white" style="font-size:10px;"></i>
-                                            បញ្ជូលពិន្ទុ
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="score_list.php"
-                                        class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'score_list.php') echo 'active'; ?> ">
-                                        <p class="stu-list text-white pl-3">
-                                            <i class="fas fa-circle text-white" style="font-size:10px;"></i>
-                                            លទ្ធផលពិន្ទុ
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                            <li
+                                class="nav-item <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'Classlist.php') echo 'menu-open'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'score_list.php') echo 'menu-open'; ?> ">
+                                <a href="#"
+                                    class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'Classlist.php') echo 'active'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'score_list.php') echo 'active'; ?> ">
+                                    <i class="nav-icon fas fa-chart-bar"></i>
+                                    <p>
+                                        ពិន្ទុ
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview ">
+                                    <li class="nav-item">
+                                        <a href="Classlist.php"
+                                            class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'Classlist.php') echo 'active'; ?> ">
+                                            <p class="stu-list text-white pl-3">
+                                                <i class="fas fa-circle text-white" style="font-size:10px;"></i>
+                                                បញ្ជូលពិន្ទុ
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="score_list.php"
+                                            class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'score_list.php') echo 'active'; ?> ">
+                                            <p class="stu-list text-white pl-3">
+                                                <i class="fas fa-circle text-white" style="font-size:10px;"></i>
+                                                លទ្ធផលពិន្ទុ
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                         <?php endif; ?>
 
 
 
                         <?php if ($_SESSION['role'] == 'user'): ?>
-                        <li
-                            class="nav-item <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'attendance.php') echo 'menu-open'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'attendace_list.php') echo 'menu-open'; ?>">
-                            <a href="#"
-                                class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'attendance.php') echo 'active'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'attendace_list.php') echo 'active'; ?> ">
-                                <i class="nav-icon fas fa-tasks"></i>
-                                <p>
-                                    វត្តមាន
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="attendance.php"
-                                        class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'attendance.php') echo 'active'; ?> ">
-                                        <p class="stu-list text-white pl-3">
-                                            <i class="fas fa-circle text-white" style="font-size:10px;"></i>
-                                            បញ្ចូលវត្តមាន
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="attendace_list.php"
-                                        class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'attendace_list.php') echo 'active'; ?> ">
-                                        <p class="stu-list text-white pl-3">
-                                            <i class="fas fa-circle text-white" style="font-size:10px;"></i>
-                                            បញ្ជីវត្តមាន
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="logout.php" class="nav-link btnhover1">
-                                <i class="nav-icon fas fa-sign-out-alt"></i>
-                                <p>
-                                    ចាកចេញ
-                                </p>
-                            </a>
-                        </li>
+                            <li
+                                class="nav-item <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'attendance.php') echo 'menu-open'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'attendace_list.php') echo 'menu-open'; ?>">
+                                <a href="#"
+                                    class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'attendance.php') echo 'active'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'attendace_list.php') echo 'active'; ?> ">
+                                    <i class="nav-icon fas fa-tasks"></i>
+                                    <p>
+                                        វត្តមាន
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="attendance.php"
+                                            class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'attendance.php') echo 'active'; ?> ">
+                                            <p class="stu-list text-white pl-3">
+                                                <i class="fas fa-circle text-white" style="font-size:10px;"></i>
+                                                បញ្ចូលវត្តមាន
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="attendace_list.php"
+                                            class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'attendace_list.php') echo 'active'; ?> ">
+                                            <p class="stu-list text-white pl-3">
+                                                <i class="fas fa-circle text-white" style="font-size:10px;"></i>
+                                                បញ្ជីវត្តមាន
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="logout.php" class="nav-link btnhover1">
+                                    <i class="nav-icon fas fa-sign-out-alt"></i>
+                                    <p>
+                                        ចាកចេញ
+                                    </p>
+                                </a>
+                            </li>
                         <?php endif; ?>
 
 
                         <?php if ($_SESSION['role'] == 'admin'): ?>
-                        <li
-                            class="nav-item <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'sch_add.php') echo 'menu-open'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'sch_list.php') echo 'menu-open'; ?> ">
-                            <a href="#"
-                                class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'sch_add.php') echo 'active'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'sch_list.php') echo 'active'; ?> ">
-                                <i class="nav-icon fas fa-calendar"></i>
-                                <p>
-                                    កាលវិភាគសិក្សា
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview ">
-                                <li class="nav-item">
-                                    <a href="sch_add.php"
-                                        class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'sch_add.php') echo 'active'; ?> ">
-                                        <p class="stu-list text-white pl-3">
-                                            <i class="fas fa-circle text-white" style="font-size:10px;"></i>
-                                            បញ្ចូលកាលវិភាគ
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="sch_stu_view.php"
-                                        class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'sch_list.php') echo 'active'; ?> ">
-                                        <p class="text-white pl-3">
-                                            <i class="fas fa-circle text-white" style="font-size:10px;"></i>
-                                            បង្ហាញកាលវិភាគ
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
+                            <li
+                                class="nav-item <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'sch_add.php') echo 'menu-open'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'sch_list.php') echo 'menu-open'; ?> ">
+                                <a href="#"
+                                    class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'sch_add.php') echo 'active'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'sch_list.php') echo 'active'; ?> ">
+                                    <i class="nav-icon fas fa-calendar"></i>
+                                    <p>
+                                        កាលវិភាគសិក្សា
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview ">
+                                    <li class="nav-item">
+                                        <a href="sch_add.php"
+                                            class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'sch_add.php') echo 'active'; ?> ">
+                                            <p class="stu-list text-white pl-3">
+                                                <i class="fas fa-circle text-white" style="font-size:10px;"></i>
+                                                បញ្ចូលកាលវិភាគ
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="sch_stu_view.php"
+                                            class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'sch_list.php') echo 'active'; ?> ">
+                                            <p class="text-white pl-3">
+                                                <i class="fas fa-circle text-white" style="font-size:10px;"></i>
+                                                បង្ហាញកាលវិភាគ
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
 
-                        </li>
-                        <li class="nav-item">
-                            <a href="report.php"
-                                class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'report.php') echo 'active'; ?> ">
-                                <i class="nav-icon fas fa-file"></i>
-                                <p>
-                                    របាយការណ៍
-                                </p>
-                            </a>
-                        </li>
+                            </li>
+                            <li class="nav-item">
+                                <a href="report.php"
+                                    class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'report.php') echo 'active'; ?> ">
+                                    <i class="nav-icon fas fa-file"></i>
+                                    <p>
+                                        របាយការណ៍
+                                    </p>
+                                </a>
+                            </li>
 
 
-                        <li
-                            class="nav-item <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'user_info.php') echo 'menu-open'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'backup.php') echo 'menu-open'; ?> ">
-                            <a href="#"
-                                class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'user_info.php') echo 'active'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'backup.php') echo 'active'; ?> ">
-                                <i class="nav-icon fas fa-cogs"></i>
-                                <p>
-                                    ផ្សេងៗ
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="user_info.php"
-                                        class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'user_info.php') echo 'active'; ?> ">
-                                        <p class="stu-list text-white pl-3">
-                                            <i class="fas fa-circle text-white" style="font-size:10px;"></i>
-                                            ព័ត៌មានអ្នកប្រើប្រាស់
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="backup.php"
-                                        class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'backup.php') echo 'active'; ?> ">
-                                        <p class="stu-list text-white pl-3">
-                                            <i class="fas fa-circle text-white" style="font-size:10px;"></i> Backup
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="nav nav-treeview mb-5">
-                                <li class="nav-item">
-                                    <a href="logout.php" class="nav-link btnhover1 ">
-                                        <p class="stu-list text-white pl-3">
-                                            <i class="fas fa-circle text-white" style="font-size:10px;"></i> ចាកចេញ
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <!-- check _SESSION if user -->
+                            <li
+                                class="nav-item <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'user_info.php') echo 'menu-open'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'backup.php') echo 'menu-open'; ?> ">
+                                <a href="#"
+                                    class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'user_info.php') echo 'active'; ?> || <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'backup.php') echo 'active'; ?> ">
+                                    <i class="nav-icon fas fa-cogs"></i>
+                                    <p>
+                                        ផ្សេងៗ
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="user_info.php"
+                                            class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'user_info.php') echo 'active'; ?> ">
+                                            <p class="stu-list text-white pl-3">
+                                                <i class="fas fa-circle text-white" style="font-size:10px;"></i>
+                                                ព័ត៌មានអ្នកប្រើប្រាស់
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="backup.php"
+                                            class="nav-link btnhover1 <?php if (isset($uriSegments[2]) && $uriSegments[2] == 'backup.php') echo 'active'; ?> ">
+                                            <p class="stu-list text-white pl-3">
+                                                <i class="fas fa-circle text-white" style="font-size:10px;"></i> Backup
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="nav nav-treeview mb-5">
+                                    <li class="nav-item">
+                                        <a href="logout.php" class="nav-link btnhover1 ">
+                                            <p class="stu-list text-white pl-3">
+                                                <i class="fas fa-circle text-white" style="font-size:10px;"></i> ចាកចេញ
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- check _SESSION if user -->
                         <?php endif; ?>
                     </ul>
 
