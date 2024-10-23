@@ -86,14 +86,10 @@ $attendance = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         ?>
                                 </td>
                                 <td>
-                                    <form action="report_att.php" method="POST">
+                                    <form action="" method="">
                                         <a href="class_att.php?classatt=<?php echo $row['ClassID'] ?>">
-                                            <i class="fa fa-file-pdf text-danger" style=" font-size: 18px;"></i>
+                                            <i class="fa fa-file-download " style=" font-size: 18px;"></i> ទាញយក
                                         </a>
-                                        <button type="submit" name="export_excel" title="Excel"
-                                            style="border:none; background: transparent; padding:0px;"><i
-                                                class="fa fa-file-excel text-success ml-2"
-                                                style=" font-size: 18px;"></i></button>
 
 
                                     </form>

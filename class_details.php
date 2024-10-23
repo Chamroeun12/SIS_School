@@ -153,7 +153,7 @@ table th {
             </div>
             <?php } ?>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-5">
             <h3 class="text-center">បញ្ជីឈ្មោះសិស្ស</h3>
         </div>
     </div>
