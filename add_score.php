@@ -20,14 +20,22 @@ $stmt = $conn->prepare($sql);
 $stmt->execute();
 $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Fetch teachers
+$sql = "SELECT * FROM tb_month_score";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$tb_month_score = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Fetch classrooms
+
 // Get class ID from URL
 $class_id = $_GET['class_id'];
 
 // Fetch students based on class ID
 $sql = "SELECT * FROM tb_add_to_class ad
-INNER JOIN tb_class c ON ad.Class_id = c.ClassID
-INNER JOIN tb_student stu ON ad.Stu_id = stu.ID
-WHERE ad.Class_id = :class_id";
+        INNER JOIN tb_class c ON ad.Class_id = c.ClassID
+        INNER JOIN tb_student stu ON ad.Stu_id = stu.ID
+        WHERE ad.Class_id = :class_id";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT);
 $stmt->execute();
@@ -42,56 +50,55 @@ if (isset($_GET['class_id'])) {
     $class = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-// Handle score submission
 if (isset($_POST['btnsave'])) {
     $for_month = $_POST['for_month'];
     $scores = $_POST['scorebox'];
 
     // Debugging to check if scorebox contains the expected values
-    var_dump($_POST['scorebox']);
+    // echo "<pre>";
+    // print_r($scores);  // Make sure scorebox contains correct data
+    // echo "</pre>";
 
     foreach ($scores as $student_id => $student_scores) {
-        foreach ($subjects as $subject) {
-            $subject_name = $subject['name'];
-            $score = (int) $student_scores[$subject_name];
+        // Collect the scores for each subject for each student
+        $homework = isset($student_scores['Homework']) ? $student_scores['Homework'] : 0;
+        $participation = isset($student_scores['Participation']) ? $student_scores['Participation'] : 0;
+        $attendance = isset($student_scores['Attendance']) ? $student_scores['Attendance'] : 0;
+        $monthly = isset($student_scores['Monthly']) ? $student_scores['Monthly'] : 0;
 
-            // Prepare the SQL statement with parameters
-            $sql = "INSERT INTO tb_month_score (Stu_id, Class_id, Homework, Participation, Attendance, Monthly, Average, for_month, Status, Create_at)
-                    VALUES (:student_id, :class_id, :homework, :participation, :attendance, :monthly, :average, :for_month, 'Active', NOW())";
-            $stmt = $conn->prepare($sql);
+        // Calculate the average score
+        $average = ($homework * 0.40) + ($participation * 0.10) + ($attendance * 0.10) + ($monthly * 0.40);
 
-            // Bind parameters
-            $stmt->bindParam(':student_id', $student_id, PDO::PARAM_INT);
-            $stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT);
-            $homework = $score;
-            $participation = $score;
-            $attendance = $score;
-            $monthly = $score;
+        // Prepare the SQL statement to insert all the scores in one row
+        $sql = "INSERT INTO tb_month_score (Stu_id, Class_id, Homework, Participation, Attendance, Monthly, Average, for_month, Status, Create_at)
+                VALUES (:student_id, :class_id, :homework, :participation, :attendance, :monthly, :average, :for_month, 'Active', NOW())";
+        $stmt = $conn->prepare($sql);
 
-            // Calculate the average
-            $average = ($homework * 0.40) + ($participation * 0.10) + ($attendance * 0.10) + ($monthly * 0.40);
+        // Bind parameters
+        $stmt->bindParam(':student_id', $student_id, PDO::PARAM_INT);
+        $stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT);
+        $stmt->bindParam(':homework', $homework, PDO::PARAM_INT);
+        $stmt->bindParam(':participation', $participation, PDO::PARAM_INT);
+        $stmt->bindParam(':attendance', $attendance, PDO::PARAM_INT);
+        $stmt->bindParam(':monthly', $monthly, PDO::PARAM_INT);
+        $stmt->bindParam(':average', $average, PDO::PARAM_STR);
+        $stmt->bindParam(':for_month', $for_month, PDO::PARAM_STR);
 
-            // Bind all necessary parameters with appropriate data types
-            $stmt->bindParam(':homework', $homework, PDO::PARAM_INT);
-            $stmt->bindParam(':participation', $participation, PDO::PARAM_INT);
-            $stmt->bindParam(':attendance', $attendance, PDO::PARAM_INT);
-            $stmt->bindParam(':monthly', $monthly, PDO::PARAM_INT);
-            $stmt->bindParam(':average', $average, PDO::PARAM_STR);
-            $stmt->bindParam(':for_month', $for_month, PDO::PARAM_STR);
-
-            // Debug the SQL statement and parameters
-            echo $stmt->queryString; // Output the raw SQL query
-            var_dump($stmt->errorInfo()); // Output any SQL error info
-            echo "Student ID: $student_id, Class ID: $class_id, Homework: $homework, Participation: $participation, Attendance: $attendance, Monthly: $monthly, Average: $average <br>";
-
-            // Execute the query
-            if (!$stmt->execute()) {
-                var_dump($stmt->errorInfo()); // Check for errors here
-            } else {
-                echo "Scores saved successfully for student ID: $student_id <br>";
-            }
+        // Execute the query
+        // if ($stmt->execute()) {
+        //     echo "Scores saved successfully for student ID: $student_id <br>";
+        // } else {
+        //     var_dump($stmt->errorInfo()); // Check for errors
+        // }
+            // Execute and handle success/error
+        if ($stmt->execute()) {
+            $_SESSION['message'] = 'Scores saved successfully!';
+            $_SESSION['message_type'] = 'success';
+          } else {
+              $_SESSION['message'] = 'Failed to Scores. Please try again.';
+              $_SESSION['message_type'] = 'error';
+          }
         }
-    }
 }
 ?>
 
@@ -117,12 +124,12 @@ if (isset($_POST['btnsave'])) {
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <form action="score_list.php" method="POST">
+                            <form action="" method="POST">
                                 <div class="row mb-2">
                                     <div class="col-sm-5">
                                         <label for="for_month">បញ្ចូលសម្រាប់ខែ</label>
                                         <select name="for_month" id="for_month" class="form-control form-select"
-                                            style="font-size:14px;" required>
+                                                style="font-size:14px;" required>
                                             <option selected disabled>-- ជ្រើសរើសខែ --</option>
                                             <option value="First Month">ប្រចាំខែទី១</option>
                                             <option value="Second Month">ប្រចាំខែទី២</option>
@@ -148,8 +155,9 @@ if (isset($_POST['btnsave'])) {
                                                 <th style="background-color:#152550; color:white;">ឈ្មោះសិស្ស</th>
                                                 <th style="background-color:#152550; color:white;">ភេទ</th>
                                                 <?php foreach ($subjects as $subject): ?>
-                                                <th style="background-color:#152550; color:white;" class="text-center">
-                                                    <?php echo $subject['name']; ?></th>
+                                                    <th style="background-color:#152550; color:white;" class="text-center">
+                                                        <?php echo $subject['name']; ?>
+                                                    </th>
                                                 <?php endforeach; ?>
                                             </tr>
                                         </thead>
@@ -161,11 +169,11 @@ if (isset($_POST['btnsave'])) {
                                                 <td><?php echo $student['En_name']; ?></td>
                                                 <td><?php echo $student['Gender']; ?></td>
                                                 <?php foreach ($subjects as $subject): ?>
-                                                <td style="padding:0px">
-                                                    <input type="number" class="form-control text-center"
-                                                        name="scorebox[<?php echo $student['ID']; ?>][<?php echo $subject['name']; ?>]"
-                                                        placeholder="0-100" min="0" max="100" required>
-                                                </td>
+                                                    <td style="padding:0px">
+                                                        <input type="number" class="form-control text-center"
+                                                               name="scorebox[<?php echo $student['ID']; ?>][<?php echo $subject['name']; ?>]"
+                                                               placeholder="0-100" min="0" max="100" required>
+                                                    </td>
                                                 <?php endforeach; ?>
                                             </tr>
                                             <?php endforeach; ?>
