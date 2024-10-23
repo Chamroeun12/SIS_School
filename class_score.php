@@ -4,35 +4,43 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-
-if(isset($_GET['classscore'])){
+if (isset($_GET['classscore']) && isset($_GET['for_month'])) {
     $classscore = $_GET['classscore'];
-    // echo $classname;
+    $for_month = $_GET['for_month'];
+
+    // Query to order by highest average score filtered by month
     $query = "SELECT 
-    stu.Kh_name AS Student_Name, 
-    stu.Stu_code,
-    stu.Gender,
-    r.Name,
-    co.Course_name,
-    c.Start_class,
-    c.End_class,
-    t.Kh_name AS Teacher_Name,
-    ms.for_month,
-    ms.Homework, 
-    ms.Participation, 
-    ms.Attendance, 
-    ms.Monthly, 
-    ms.Average 
+        stu.Kh_name AS Student_Name, 
+        stu.Stu_code,
+        stu.Gender,
+        r.Name,
+        c.Shift,
+        co.Course_name,
+        c.Start_class,
+        c.End_class,
+        t.Kh_name AS Teacher_Name,
+        ms.for_month,
+        ms.Homework, 
+        ms.Participation, 
+        ms.Attendance, 
+        ms.Monthly, 
+        ms.Average 
     FROM tb_month_score ms
-		INNER JOIN tb_student stu ON ms.Stu_id = stu.ID
-		INNER JOIN tb_class c ON ms.Class_id = c.ClassID
+        INNER JOIN tb_student stu ON ms.Stu_id = stu.ID
+        INNER JOIN tb_class c ON ms.Class_id = c.ClassID
         INNER JOIN tb_classroom r ON c.room_id = r.id
-		INNER JOIN tb_course co ON c.course_id = co.id
-		INNER JOIN tb_teacher t ON c.Teacher_id = t.id WHERE c.`status` = 'active' AND Class_id =:classscore";
-$stmt = $conn->prepare($query);
-$stmt->bindParam(':classscore', $classscore, PDO::PARAM_INT);
-$stmt->execute();
-$Class = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        INNER JOIN tb_course co ON c.course_id = co.id
+        INNER JOIN tb_teacher t ON c.Teacher_id = t.id 
+    WHERE c.`status` = 'active' 
+        AND Class_id = :classscore 
+        AND ms.for_month = :for_month
+    ORDER BY ms.Average DESC, ms.for_month"; // Filter by for_month
+
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':classscore', $classscore, PDO::PARAM_INT);
+    $stmt->bindParam(':for_month', $for_month, PDO::PARAM_STR);
+    $stmt->execute();
+    $Class = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 
@@ -41,13 +49,14 @@ include_once "header.php";
 
 <style>
 @media print {
-
-    /* Hide footer */
     footer {
         display: none;
     }
 
-    /* Ensure table borders and background colors are printed */
+    form {
+        display: none;
+    }
+
     table {
         border-collapse: collapse;
     }
@@ -55,48 +64,41 @@ include_once "header.php";
     th,
     td {
         border: 1px solid black !important;
-        /* Set borders to black */
         color: black !important;
-        /* Set text color to black */
     }
 
-    /* Set specific table header background */
     thead {
         background-color: darkblue !important;
-        /* Ensure background is printed */
     }
 
-    /* Adjust padding for better print layout */
     th,
     td {
         padding: 10px;
     }
 
-    /* Hide any unnecessary buttons or elements */
     .btn1,
     .card-title {
         display: none;
     }
 }
 
-/* Optional: Add color back to the web page (non-print view) */
 table th {
     background-color: #000;
-    /* You can use this to maintain original design */
 }
 </style>
 
 <div class="">
     <h3 class="card-title float-sm-right pr-4 pt-4">
-        <button type="button" class="btn1 bg-sis text-white" onclick="window.print()"><i class="fa fa-print"></i>
-            ទាញយក</button>
+        <button type="button" class="btn1 bg-sis text-white" onclick="window.print()">
+            <i class="fa fa-print"></i> ទាញយក
+        </button>
     </h3>
 </div>
 
-
 <section class="content-wrapper">
     <div class="row pt-4">
-        <div class="col-sm-4"> <?php if (!empty($Class)) { ?>
+        <div class="col-sm-4">
+            <?php if (!empty($Class)) { ?>
             <div class="ml-3">
                 <tr>បន្ទប់ <?php echo htmlspecialchars($Class[0]['Name']); ?> - កម្រិតសិក្សា
                     <?php echo htmlspecialchars($Class[0]['Course_name']); ?></tr>
@@ -116,6 +118,38 @@ table th {
             <h3 class="text-center">តារាពិន្ទុសិស្សប្រចាំខែ</h3>
         </div>
     </div>
+    <form method="GET" action="">
+        <div class="row mt-2">
+            <div class="col-sm-3 ml-4">
+                <label for="for_month">សម្រាប់ខែ </label>
+                <select name="for_month" id="for_month" class="form-control form-select" style="font-size:14px;"
+                    required>
+                    <option selected disabled>-- ជ្រើសរើសខែ --</option>
+                    <option value="First Month">ប្រចាំខែទី១</option>
+                    <option value="Second Month">ប្រចាំខែទី២</option>
+                    <option value="Third Month">ប្រចាំខែទី៣</option>
+                    <option value="Fourth Month">ប្រចាំខែទី៤</option>
+                    <option value="Fifth Month">ប្រចាំខែទី៥</option>
+                    <option value="Sixth Month">ប្រចាំខែទី៦</option>
+                    <option value="Seventh Month">ប្រចាំខែទី៧</option>
+                    <option value="Eighth Month">ប្រចាំខែទី៨</option>
+                    <option value="Ninth Month">ប្រចាំខែទី៩</option>
+                    <option value="Tenth Month">ប្រចាំខែទី១០</option>
+                    <!-- Add more months as needed -->
+                </select>
+            </div>
+            <div class="col-sm-4 ">
+                <label for="">&nbsp;</label>
+                <div class="ml-3">
+                    <input type="hidden" name="classscore" value="<?php echo htmlspecialchars($_GET['classscore']); ?>">
+                    <input type="submit" value="បង្ហាញ" name="btnsave" class="btn1 bg-sis text-white">
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
 
     <hr>
     <div class="row m-2">
@@ -123,32 +157,52 @@ table th {
             <div class="card">
                 <div class="card-body table-responsive p-0 text-sm">
                     <table class="table-bordered table-hover table" id="userTbl">
-                        <thead class=" table-secondary">
-                            <tr class="">
+                        <thead class="table-secondary">
+                            <tr>
                                 <th style=" font-size:16px;">ល.រ</th>
                                 <th style=" font-size:16px;">អត្តលេខ</th>
                                 <th style=" font-size:16px;">ឈ្មោះ</th>
                                 <th style=" font-size:16px;">ភេទ</th>
                                 <th style=" font-size:16px;">កិច្ចការផ្ទះ</th>
-                                <th style=" font-size:16px; ">ការចូលរួម</th>
+                                <th style=" font-size:16px;">ការចូលរួម</th>
                                 <th style=" font-size:16px;">វត្តមាន</th>
                                 <th style=" font-size:16px;">ប្រចាំខែ</th>
                                 <th style=" font-size:16px;">មធ្យមភាគ</th>
+                                <th style=" font-size:16px;">Rank</th>
+                                <th style=" font-size:16px;">For Month</th>
                                 <th style=" font-size:16px;">ផ្សេងៗ</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $i = 1; foreach ($Class as $row) { ?>
+                            <?php if (!empty($Class)) {
+                                $i=1;
+                                $rank = 1; 
+                                $previousAverage = null; 
+                                foreach ($Class as $row) { 
+                                    // Check if this student's average is different from the previous one
+                                    if ($previousAverage !== null && $row['Average'] != $previousAverage) {
+                                        $rank++; // Increment the rank only if the average is different
+                                    }
+                                    $previousAverage = $row['Average']; // Update the previous average to the current one
+                                ?>
                             <tr>
-                                <td><?php echo $i++; ?></td>
+                                <td><?php echo $i++; ?></td> <!-- Rank -->
                                 <td><?php echo htmlspecialchars($row['Stu_code']); ?></td>
                                 <td><?php echo htmlspecialchars($row['Student_Name']); ?></td>
                                 <td><?php echo htmlspecialchars($row['Gender']); ?></td>
-                                <td><?php echo htmlspecialchars($row['DOB']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Address']); ?></td>
-                                <td><?php echo htmlspecialchars($row['Phone']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Homework']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Participation']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Attendance']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Monthly']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Average']); ?></td>
+                                <td><?php echo $rank; ?></td> <!-- Display rank -->
+                                <td><?php echo htmlspecialchars($row['for_month']); ?></td>
                                 <td></td>
-
+                            </tr>
+                            <?php }
+                            } else { ?>
+                            <tr>
+                                <td colspan="12" class="text-center">No data available for the selected month.</td>
                             </tr>
                             <?php } ?>
                         </tbody>

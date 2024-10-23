@@ -8,7 +8,7 @@ $sql = "SELECT r.Name, t.Kh_name, co.Course_name, c.Shift, c.ClassID FROM tb_cla
 		INNER JOIN tb_teacher t ON c.Teacher_id = t.id
 		INNER JOIN tb_course co ON c.course_id = co.id
         INNER JOIN tb_classroom r ON c.room_id = r.id
-    WHERE c.`status` = 'active'";
+    WHERE c.`status` = 'active' ";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $score = $stmt->fetchAll(PDO::FETCH_ASSOC);
