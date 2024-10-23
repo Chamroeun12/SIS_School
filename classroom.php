@@ -276,12 +276,9 @@ include_once "header.php";
                                 </td>
                                 <td>
                                     <form action="report_data.php" method="POST">
-
-                                        <button type="submit" name="export_pdf" title="PDF"
-                                            style="border:none; background: transparent; padding:0px;"><i
-                                                class="fa fa-file-pdf text-danger ml-1" style=" font-size: 18px;"></i>
-                                            <input type="hidden" name="classname" value="<?=$row['Name']; ?>">
-                                        </button>
+                                        <a href="class_details.php?classroom=<?php echo $row['ClassID'] ?>">
+                                            <i class="fa fa-file-pdf text-danger" style=" font-size: 18px;"></i>
+                                        </a>
                                         <button type="submit" name="export_excel" title="Excel"
                                             style="border:none; background: transparent; padding:0px;"><i
                                                 class="fa fa-file-excel text-success ml-1"
