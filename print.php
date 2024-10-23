@@ -4,38 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Print Example</title>
+    <title>Print Page in Landscape with Print-Only Content</title>
     <style>
-    body {
-        font-family: Arial, sans-serif;
-        color: black;
-        /* Text color */
-    }
-
-    .color-section {
-        color: blue;
-        /* Color for this section */
-    }
-
     @media print {
-        body {
-            color: black;
-            /* Ensure print version uses black text */
+
+        /* Force landscape orientation */
+        @page {
+            size: landscape;
         }
 
+        /* Hide elements normally visible on screen */
         .no-print {
             display: none;
-            /* Hide elements not needed in print */
         }
+
+        /* Show elements only during printing */
+        .print-only {
+            display: block;
+        }
+    }
+
+    /* Default visibility on screen */
+    .print-only {
+        display: none;
     }
     </style>
 </head>
 
 <body>
-    <h1>Print Color Example</h1>
-    <p>This is a sample paragraph.</p>
-    <div class="color-section">This section is blue.</div>
+    <h1>This page will print in landscape orientation</h1>
+    <p>This content will be visible on both the screen and in print.</p>
+
+    <div class="no-print">
+        <p>This content is only visible on the screen and will not appear when printed.</p>
+    </div>
+
+    <div class="print-only">
+        <p>This content will only appear when printing.</p>
+    </div>
+
+    <!-- Trigger print -->
     <button onclick="window.print()">Print this page</button>
+
+    <script>
+    // Optionally trigger print on page load
+    // window.onload = function() {
+    //     window.print();
+    // };
+    </script>
 </body>
 
 </html>

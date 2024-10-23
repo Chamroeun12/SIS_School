@@ -96,6 +96,29 @@ $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
     }
     </style>
 
+    <style>
+    @media print {
+        .no-print {
+            display: none !important;
+        }
+
+        @page {
+            size: A4 landscape;
+        }
+
+        .print-only {
+            display: block !important;
+        }
+    }
+
+    .print-only {
+        display: none;
+    }
+
+    .no-print {
+        display: block;
+    }
+    </style>
 
 </head>
 

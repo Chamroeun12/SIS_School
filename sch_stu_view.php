@@ -31,7 +31,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <?php include_once "header.php"; ?>
 <section class="content-wrapper">
-    <div class="container-fluid">
+    <div class="container-fluid no-print">
         <div class="row mb-2 card-header">
             <div class="col-sm-6">
                 <h3 class="m-0">|តារាងបង្ហាញកាលវិភាគ</h3>
@@ -39,8 +39,12 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
+    <div class="print-only text-center">
+        <h3>Teaching Scedule</h3>
+        <h5>Morning Scedule</h5>
+    </div>
     <form action="" method="post">
-        <div class="form-group m-2 card p-4">
+        <div class="form-group m-2 card p-4 no-print">
             <div class="row">
                 <div class="col-md-4">
                     <select name="classid" class="form-control form-select">
@@ -56,6 +60,11 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="col-md-2">
                     <input type="submit" class="btn1 bg-sis text-white" name="save" id="save" value="បង្ហាញ"
                         class="form-control">
+                    <h3 class="float-right">
+                        <!-- Print button (not to be printed) -->
+                        <button class="no-print btn1 bg-sis text-white text-sm" onclick="printPage()">Print</button>
+                    </h3>
+
                 </div>
             </div>
         </div>
@@ -68,7 +77,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <table class="table table-hover table-bordered text-nowrap text-center" "
                 id=" userTbl">
                 <thead>
-                    <tr>
+                    <tr class="on-print">
                         <th style="width: 10%; background-color: #152550; color:white; font-size:medium;">
                             ម៉ោងសិក្សា
                         </th>
@@ -119,8 +128,19 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <!-- /.card -->
     </div>
-
     <!-- /.row -->
+
+    <div class="print-only ml-2">
+        <h4>NOTICE:</h4>
+        <p>*This schedule can be changed or added and updated at anytime if necsessary.</p>
+        <p>*Please contact the school administration for any questions or concerns.</p>
+    </div>
 </section>
 </div>
+
+<script>
+function printPage() {
+    window.print();
+}
+</script>
 <?php include_once "footer.php"; ?>
