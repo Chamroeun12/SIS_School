@@ -133,7 +133,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- /.card -->
     </div>
     <!-- /.row -->
-
+    <!-- ksjhf,sfskuhf -->
     <div class="print-only ml-2">
         <h4>NOTICE:</h4>
         <p>*This schedule can be changed or added and updated at anytime if necsessary.</p>
