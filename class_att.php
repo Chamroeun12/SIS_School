@@ -8,8 +8,12 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if(isset($_GET['classatt'])){
+if(isset($_POST['save'])){
+    $start = $_POST['start'];
+    $end = $_POST['end'];
+    if(isset($_GET['classatt'])){
     $classatt = $_GET['classatt'];
+    // echo $classname;
     $query = "SELECT stu.En_name,
                 stu.Kh_name,
                 stu.Stu_code,
@@ -31,12 +35,12 @@ if(isset($_GET['classatt'])){
                   INNER JOIN tb_teacher t ON c.Teacher_id = t.id
                   INNER JOIN tb_course co ON c.course_id = co.id
                   INNER JOIN tb_classroom r ON c.room_id = r.id
-    WHERE Class_id = :classatt";
-    
-    $stmt = $conn->prepare($query);
-    $stmt->bindParam(':classatt', $classatt, PDO::PARAM_INT);
-    $stmt->execute();
-    $Class = $stmt->fetchAll(PDO::FETCH_ASSOC);
+WHERE Class_id =:classatt AND att.Date BETWEEN '$start' AND '$end' ";
+$stmt = $conn->prepare($query);
+$stmt->bindParam(':classatt', $classatt, PDO::PARAM_INT);
+$stmt->execute();
+$Class = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
 
 if (isset($_POST['export_excel'])) {
@@ -115,26 +119,62 @@ table th {
 }
 </style>
 
-<div class="">
+
+
+<!-- <div class="">
     <h3 class="card-title float-sm-right pr-4 pt-4">
         <button type="button" class="btn bg-danger text-white" onclick="window.print()">
             <i class="fa fa-print"></i> ទាញយក
         </button>
-    </h3>
+    </h3> -->
 
-    <!-- Form for exporting to Excel -->
-    <form method="post" class="float-sm-right pr-4 pt-4">
+<!-- Form for exporting to Excel -->
+<!-- <form method="post" class="float-sm-right pr-4 pt-4">
         <button type="submit" name="export_excel" class="btn bg-success text-white">
             <i class="fa fa-file-excel "></i> Excel
         </button>
     </form>
-</div>
+</div> -->
 
 <!-- Content Section (Unchanged) -->
 <section class="content-wrapper">
+    <form action="" method="post">
+        <div class="form-group m-2 card p-4 no-print">
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="date" name="start" id="start" class="form-control"
+                        value="<?php echo isset($_POST['start']) ? $_POST['start'] : ''; ?>" required>
+                </div>
+                <div class="col-md-2">
+                    <input type="date" name="end" id="end" class="form-control"
+                        value="<?php echo isset($_POST['end']) ? $_POST['end'] : ''; ?>" required>
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" class="btn1 bg-sis text-white" name="save" id="save" value="បង្ហាញ"
+                        class="form-control">
+                </div>
+                <div class="col-md-4">
+                </div>
+
+                <div class="col-md-1">
+                    <button type="button" class="btn bg-danger text-white" onclick="window.print()">
+                        <i class="fa fa-print"></i> ទាញយក
+                    </button>
+                </div>
+                <div class="col-md-1">
+
+                    <button type="submit" name="export_excel" class="btn bg-success text-white">
+                        <i class="fa fa-file-excel "></i> Excel
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </form>
     <div class="row pt-4">
+        <?php if (!empty($Class)) { ?>
         <div class="col-sm-4">
-            <?php if (!empty($Class)) { ?>
+
             <div class="ml-3">
                 <tr>បន្ទប់ <?php echo htmlspecialchars($Class[0]['Name']); ?> - កម្រិតសិក្សា
                     <?php echo htmlspecialchars($Class[0]['Course_name']); ?></tr>
@@ -151,15 +191,18 @@ table th {
             <div class="ml-3">
                 <tr>កាលបរិច្ឆេទ: <?php echo htmlspecialchars($Class[0]['Date']); ?></tr>
             </div>
-            <?php } ?>
+
         </div>
         <div class="col-sm-5">
             <h3 class="text-center">បញ្ជីវត្តមានសិស្ស</h3>
         </div>
+        <?php } ?>
     </div>
 
     <hr>
+    <?php if(isset($Class)){ ?>
     <div class="row m-2">
+
         <div class="col-12">
             <div class="card">
                 <div class="card-body table-responsive p-0 text-sm">
@@ -195,6 +238,9 @@ table th {
             </div>
         </div>
     </div>
+    <?php }else{
+        echo'<h4 class="text-center">គ្មានទិន្នន័យ</h4>';
+    }?>
 </section>
 
 <?php include_once "footer.php"; ?>
