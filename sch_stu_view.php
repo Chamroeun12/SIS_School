@@ -50,24 +50,13 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <select name="classid" class="form-control form-select">
                         <option selected disabled>--ជ្រើសរើសថ្នាក់--</option>
                         <?php foreach ($class as $row) : ?>
-<<<<<<< HEAD
-                        <option value="<?= htmlspecialchars($row['ClassID']); ?>"
-                            <?php if (isset($_GET['classid']) && $_GET['classid'] == $row['ClassID']) echo 'selected'; ?>>
-                            <?= htmlspecialchars($row['Name']); ?> - <?= htmlspecialchars($row['Course_name']); ?> -
-                            <?= htmlspecialchars($row['Shift']); ?>
-=======
                         <option value="<?= $row['ClassID']; ?>"
                             <?= (isset($_POST['classid']) && $_POST['classid'] == $row['ClassID']) ? 'selected' : ''; ?>>
                             <?= $row['Name']; ?> - <?= $row['Course_name']; ?> - <?= $row['Shift']; ?>
->>>>>>> 140112f696779de527c4c43b63c99be6d38820b7
                         </option>
                         <?php endforeach; ?>
                     </select>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 140112f696779de527c4c43b63c99be6d38820b7
                 </div>
                 <div class="col-md-6">
                 </div>
