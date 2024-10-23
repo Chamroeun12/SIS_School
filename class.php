@@ -16,7 +16,7 @@ $stmt->execute();
 $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Number of records per page
-$records_per_page = 15;
+$records_per_page = 15; 
 
 
 $sql = "SELECT * FROM tb_student  WHERE status='active' LIMIT $records_per_page";
@@ -60,7 +60,7 @@ if (isset($_POST['btnsave'])) {
         header('Location: class.php');
         exit();
     } else {
-        echo '<script>alert("Please select a class and students!")</script>';
+        header('Location: class.php');
     }
 }
 
@@ -88,10 +88,10 @@ if (isset($_POST['btnsave'])) {
                                 <div class="input-group">
                                     <!-- Class selection dropdown -->
                                     <select name="addclass" class="form-control form-select">
-                                        <option selected disabled>--ជ្រើសរើសថ្នាក់--</option>
+                                        <option selected disabled="">--ជ្រើសរើសថ្នាក់--</option>
                                         <?php foreach ($class as $row) : ?>
-                                            <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
-                                                <?= $row['Course_name']; ?> - <?= $row['Shift']; ?> </option>
+                                        <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
+                                            <?= $row['Course_name']; ?> - <?= $row['Shift']; ?> </option>
                                         <?php endforeach; ?>
                                     </select>
                                     <div class="ml-3">
@@ -127,22 +127,22 @@ if (isset($_POST['btnsave'])) {
                                 </thead>
                                 <tbody id="showdata">
                                     <?php if (isset($student)) { ?>
-                                        <?php foreach ($student as $key => $value) { ?>
-                                            <tr>
-                                                <td>
-                                                    <div class="icheck-primary">
-                                                        <input type="checkbox" name="addstu[]"
-                                                            value="<?php echo $value['ID']; ?>" id="check<?php echo $key; ?>">
-                                                        <label for="check<?php echo $key; ?>"></label>
-                                                    </div>
-                                                </td>
-                                                <td><?php echo ($key + 1); ?></td>
-                                                <td><?php echo $value['Stu_code']; ?></td>
-                                                <td><?php echo $value['En_name']; ?></td>
-                                                <td><?php echo $value['Kh_name']; ?></td>
-                                                <td><?php echo $value['Gender']; ?></td>
-                                            </tr>
-                                        <?php } ?>
+                                    <?php foreach ($student as $key => $value) { ?>
+                                    <tr>
+                                        <td>
+                                            <div class="icheck-primary">
+                                                <input type="checkbox" name="addstu[]"
+                                                    value="<?php echo $value['ID']; ?>" id="check<?php echo $key; ?>">
+                                                <label for="check<?php echo $key; ?>"></label>
+                                            </div>
+                                        </td>
+                                        <td><?php echo ($key + 1); ?></td>
+                                        <td><?php echo $value['Stu_code']; ?></td>
+                                        <td><?php echo $value['En_name']; ?></td>
+                                        <td><?php echo $value['Kh_name']; ?></td>
+                                        <td><?php echo $value['Gender']; ?></td>
+                                    </tr>
+                                    <?php } ?>
                                     <?php } ?>
                                 </tbody>
                             </table>

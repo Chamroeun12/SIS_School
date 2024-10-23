@@ -127,9 +127,9 @@ table th {
             <div class="card">
 
                 <div class="card-body table-responsive p-0 text-sm">
-                    <table class="table-bordered table-hover table" id="userTbl">
+                    <table class="table-bordered table-hover table">
                         <thead class=" table-secondary">
-                            <tr class="">
+                            <tr>
                                 <th style=" font-size:16px;">ល.រ</th>
                                 <th style=" font-size:16px;">អត្តលេខ</th>
                                 <th style=" font-size:16px;">ឈ្មោះ</th>
@@ -161,5 +161,6 @@ table th {
         </div>
     </div>
 </section>
+
 
 <?php include_once "footer.php"; ?>
