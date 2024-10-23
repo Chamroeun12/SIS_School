@@ -44,7 +44,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="row">
                 <div class="col-md-4">
                     <select name="classid" class="form-control form-select">
-                        <option value="">--ជ្រើសរើសថ្នាក់--</option>
+                        <option selected disabled>--ជ្រើសរើសថ្នាក់--</option>
                         <?php foreach ($class as $row) : ?>
                         <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
                             <?= $row['Course_name']; ?> - <?= $row['Shift']; ?> </option>
@@ -52,7 +52,6 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </select>
                 </div>
                 <div class="col-md-6">
-
                 </div>
                 <div class="col-md-2">
                     <input type="submit" class="btn1 bg-sis text-white" name="save" id="save" value="បង្ហាញ"
@@ -65,16 +64,8 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- /.row -->
 
     <div class="row m-2">
-        <!-- <div class="form-group" style="width: 300px;">
-                            <input type="text" id="" name="namesearch" class="search form-control float-right"
-                                placeholder="ស្វែងរក" ">
-                            <div class="input-group-append">
-                            </div>
-                        </div> -->
-        <!-- /.card-header -->
-
         <div class="card-body table-responsive p-0 text-sm mt-1">
-            <table class="table table-hover text-nowrap text-center" "
+            <table class="table table-hover table-bordered text-nowrap text-center" "
                 id=" userTbl">
                 <thead>
                     <tr>
@@ -96,9 +87,6 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <th style="width: 15%; background-color: #152550; color:white; font-size:medium;">
                             សុក្រ
                         </th>
-                        <th style="width: 15%; background-color: #152550; color:white; font-size:medium;">
-                            សៅរ៍
-                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -106,7 +94,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php $i = 1;
                         foreach ($sch as $row): ?>
                     <tr style="height: 60px;">
-                        <td class="table-secondary align-middle">
+                        <td class="table-info align-middle">
                             <?php echo date('h:i', strtotime($row['Time_in'])); ?> -
                             <?php echo date('h:i A', strtotime($row['Time_out'])); ?>
                         </td>
@@ -120,21 +108,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td class="align-middle"><?php echo $row['Wednesday']; ?></td>
                         <td class="align-middle"><?php echo $row['Thursday']; ?></td>
                         <td class="align-middle"><?php echo $row['Friday']; ?></td>
-                        <td class="align-middle">
-                            <!-- <form action="report_sch.php" method="POST">
-                                        <button type="submit" name="export_pdf" title="PDF"
-                                            style="border:none; background: transparent; padding:0px;"><i
-                                                class="fa fa-file-pdf text-danger ml-1" style=" font-size: 18px;"></i>
-                                            <input type="hidden" name="classname" value="<?= $row['Class_name']; ?>">
-                                        </button>
-                                        <button type="submit" name="export_excel" title="Excel"
-                                            style="border:none; background: transparent; padding:0px;"><i
-                                                class="fa fa-file-excel text-success ml-2"
-                                                style=" font-size: 18px;"></i></button>
 
-
-                                    </form> -->
-                        </td>
                     </tr>
                     <?php endforeach; ?>
                     <?php } else {

@@ -69,7 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Function to fetch attendance information
-function fetchAttendance($class_id, $class_date, $conn) {
+function fetchAttendance($class_id, $class_date, $conn)
+{
     $sql = "SELECT tb_student.ID, tb_student.Kh_name, tb_student.Stu_code, tb_attendance.Attendance
             FROM tb_student
             LEFT JOIN tb_attendance ON tb_student.ID = tb_attendance.Stu_ID AND tb_attendance.Class_ID = :class_id AND tb_attendance.Date = :class_date
@@ -145,7 +146,7 @@ th {
                             <div class="row align-items-end ">
                                 <div class="col-sm-5">
                                     <label for="Class_id" class="form-label">សម្រាប់ថ្នាក់</label>
-                                    <select name="Class_id" id="Class_id" class="form-control" required
+                                    <select name="Class_id" id="Class_id" class="form-control form-select" required
                                         style="font-size:14px;">
                                         <option value="">--ជ្រើសរើសថ្នាក់--</option>
                                         <?php foreach ($classes as $row) : ?>

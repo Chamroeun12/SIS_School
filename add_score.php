@@ -47,6 +47,9 @@ if (isset($_POST['btnsave'])) {
     $for_month = $_POST['for_month'];
     $scores = $_POST['scorebox'];
 
+    // Debugging to check if scorebox contains the expected values
+    var_dump($_POST['scorebox']);
+
     foreach ($scores as $student_id => $student_scores) {
         foreach ($subjects as $subject) {
             $subject_name = $subject['name'];
@@ -59,7 +62,7 @@ if (isset($_POST['btnsave'])) {
 
             // Bind parameters
             $stmt->bindParam(':student_id', $student_id, PDO::PARAM_INT);
-            $stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT); 
+            $stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT);
             $homework = $score;
             $participation = $score;
             $attendance = $score;
@@ -68,21 +71,22 @@ if (isset($_POST['btnsave'])) {
             // Calculate the average
             $average = ($homework * 0.40) + ($participation * 0.10) + ($attendance * 0.10) + ($monthly * 0.40);
 
-            // Bind all necessary parameters
-            $stmt->bindParam(':homework', $homework, PDO::PARAM_STR);
-            $stmt->bindParam(':participation', $participation, PDO::PARAM_STR);
-            $stmt->bindParam(':attendance', $attendance, PDO::PARAM_STR);
-            $stmt->bindParam(':monthly', $monthly, PDO::PARAM_STR);
+            // Bind all necessary parameters with appropriate data types
+            $stmt->bindParam(':homework', $homework, PDO::PARAM_INT);
+            $stmt->bindParam(':participation', $participation, PDO::PARAM_INT);
+            $stmt->bindParam(':attendance', $attendance, PDO::PARAM_INT);
+            $stmt->bindParam(':monthly', $monthly, PDO::PARAM_INT);
             $stmt->bindParam(':average', $average, PDO::PARAM_STR);
             $stmt->bindParam(':for_month', $for_month, PDO::PARAM_STR);
 
-            // Debug the SQL statement
-            echo $stmt->queryString; // This will output the raw SQL query for inspection
-            print_r($stmt->errorInfo()); // This will output any SQL error info
+            // Debug the SQL statement and parameters
+            echo $stmt->queryString; // Output the raw SQL query
+            var_dump($stmt->errorInfo()); // Output any SQL error info
+            echo "Student ID: $student_id, Class ID: $class_id, Homework: $homework, Participation: $participation, Attendance: $attendance, Monthly: $monthly, Average: $average <br>";
 
             // Execute the query
             if (!$stmt->execute()) {
-                print_r($stmt->errorInfo()); // Check for errors here
+                var_dump($stmt->errorInfo()); // Check for errors here
             } else {
                 echo "Scores saved successfully for student ID: $student_id <br>";
             }
@@ -104,19 +108,20 @@ if (isset($_POST['btnsave'])) {
                 </div>
             </div>
         </div>
-    </section><!-- Main content -->
+    </section>
+
+    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <!-- Combine the form for selecting the month and the score form into one -->
                             <form action="score_list.php" method="POST">
                                 <div class="row mb-2">
                                     <div class="col-sm-5">
                                         <label for="for_month">បញ្ចូលសម្រាប់ខែ</label>
-                                        <select name="for_month" id="for_month" class="form-control"
+                                        <select name="for_month" id="for_month" class="form-control form-select"
                                             style="font-size:14px;" required>
                                             <option selected disabled>-- ជ្រើសរើសខែ --</option>
                                             <option value="First Month">ប្រចាំខែទី១</option>
@@ -132,6 +137,7 @@ if (isset($_POST['btnsave'])) {
                                         </select>
                                     </div>
                                 </div>
+
                                 <!-- Student Scores Table -->
                                 <div class="card-body p-0 mt-3">
                                     <table class="table table-bordered table-striped">
