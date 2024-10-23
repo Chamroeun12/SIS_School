@@ -4,8 +4,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-
-if(isset($_GET['classatt'])){
+if(isset($_POST['save'])){
+    $start = $_POST['start'];
+    $end = $_POST['end'];
+    if(isset($_GET['classatt'])){
     $classatt = $_GET['classatt'];
     // echo $classname;
     $query = "SELECT stu.En_name,
@@ -29,12 +31,14 @@ if(isset($_GET['classatt'])){
                   INNER JOIN tb_teacher t ON c.Teacher_id = t.id
                   INNER JOIN tb_course co ON c.course_id = co.id
                   INNER JOIN tb_classroom r ON c.room_id = r.id
-WHERE Class_id =:classatt";
+WHERE Class_id =:classatt AND att.Date BETWEEN '$start' AND '$end' ";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':classatt', $classatt, PDO::PARAM_INT);
 $stmt->execute();
 $Class = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+}
+
 
 
 include_once "header.php";
@@ -96,6 +100,30 @@ table th {
 
 
 <section class="content-wrapper">
+    <form action="" method="post">
+        <div class="form-group m-2 card p-4 no-print">
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="date" name="start" id="start" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <input type="date" name="end" id="end" class="form-control">
+                </div>
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" class="btn1 bg-sis text-white" name="save" id="save" value="បង្ហាញ"
+                        class="form-control">
+                    <div class="float-right mr-3">
+                        <!-- Print button (not to be printed) -->
+                        <button class="no-print btn1 bg-sis text-white" onclick="printPage()"><i
+                                class="fas fa-print"></i> ទាញយក</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
     <div class="row pt-4">
         <div class="col-sm-4"> <?php if (!empty($Class)) { ?>
             <div class="ml-3">
@@ -122,6 +150,7 @@ table th {
     </div>
 
     <hr>
+    <?php if(isset($Class)) {?>
     <div class="row m-2">
         <div class="col-12">
             <div class="card">
@@ -160,6 +189,9 @@ table th {
             </div>
         </div>
     </div>
+    <?php }else{
+        echo'<div class="text-center">គ្នានទិន្ន័យ</div>';
+    }?>
 </section>
 
 <?php include_once "footer.php"; ?>
