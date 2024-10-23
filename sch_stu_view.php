@@ -41,7 +41,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="print-only text-center mt-4">
         <h3>កាលវិភាគប្រចាំសប្តាហ៍</h3>
-        <h5>Morning Scedule</h5>
+        <!-- <h5>Morning Scedule</h5> -->
     </div>
     <form action="" method="post">
         <div class="form-group m-2 card p-4 no-print">
@@ -50,10 +50,13 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <select name="classid" class="form-control form-select">
                         <option selected disabled>--ជ្រើសរើសថ្នាក់--</option>
                         <?php foreach ($class as $row) : ?>
-                        <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
-                            <?= $row['Course_name']; ?> - <?= $row['Shift']; ?> </option>
+                        <option value="<?= $row['ClassID']; ?>"
+                            <?= (isset($_POST['classid']) && $_POST['classid'] == $row['ClassID']) ? 'selected' : ''; ?>>
+                            <?= $row['Name']; ?> - <?= $row['Course_name']; ?> - <?= $row['Shift']; ?>
+                        </option>
                         <?php endforeach; ?>
                     </select>
+
                 </div>
                 <div class="col-md-6">
                 </div>
@@ -72,29 +75,30 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </form>
 
     <!-- /.row -->
-
+    <hr>
     <div class="row m-2">
+
         <div class="card-body table-responsive p-0 text-sm mt-1">
             <table class="table table-hover table-bordered text-nowrap text-center" "
                 id=" userTbl">
                 <thead>
-                    <tr class="on-print">
-                        <th style="width: 15%; background-color: #152550; color:white; font-size:medium;">
+                    <tr class="on-print table-secondary" style="font-size:16px;">
+                        <th style="width:18%">
                             ម៉ោងសិក្សា
                         </th>
-                        <th style="width: 15%; background-color: #152550; color:white; font-size:medium;">
+                        <th>
                             ច័ន្ទ
                         </th>
-                        <th style="width: 15%; background-color: #152550; color:white; font-size:medium;">
+                        <th>
                             អង្គារ
                         </th>
-                        <th style="width: 15%; background-color: #152550; color:white; font-size:medium;">
+                        <th>
                             ពុធ
                         </th>
-                        <th style="width: 15%; background-color: #152550; color:white; font-size:medium;">
+                        <th>
                             ព្រហស្បត្តិ៍
                         </th>
-                        <th style="width: 15%; background-color: #152550; color:white; font-size:medium;">
+                        <th>
                             សុក្រ
                         </th>
                     </tr>
@@ -104,7 +108,7 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php $i = 1;
                         foreach ($sch as $row): ?>
                     <tr style="height: 60px;">
-                        <td class="table-info align-middle">
+                        <td class="align-middle">
                             <?php echo date('h:i', strtotime($row['Time_in'])); ?> -
                             <?php echo date('h:i A', strtotime($row['Time_out'])); ?>
                         </td>
@@ -133,9 +137,26 @@ $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- /.row -->
 
     <div class="print-only ml-2">
-        <h4>NOTICE:</h4>
-        <p>*This schedule can be changed or added and updated at anytime if necsessary.</p>
-        <p>*Please contact the school administration for any questions or concerns.</p>
+        <div>
+            <tr>
+                ចំណាំ:
+            </tr>
+        </div>
+        <div>
+            <tr style="font-size:12px;">
+                *This schedule can be changed or added and updated at anytime if necsessary.
+            </tr>
+        </div>
+        <div>
+            <tr style="font-size:12px;">
+                *Please contact the school administration for any questions or concerns.
+            </tr>
+        </div>
+
+
+
+
+
     </div>
 </section>
 </div>
