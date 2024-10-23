@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 if (isset($_POST['backup'])) {
     $projectDir = '\C:\xampp\htdocs\SIS_School';  // Your project directory
-    $backupDir = '\C:\xampp\htdocs\SIS_School\Backup';       // Your backup location
+    $backupDir = '\C:\xampp\htdocs';       // Your backup location
     $date = date('Y-m-d');                     // Get the current date
     $backupFile = $backupDir . "/project_backup_$date.zip";  // Backup file name
 
@@ -31,12 +31,15 @@ if (isset($_POST['backup'])) {
 }
 include_once "header.php";
 ?>
+<section class="content-wrapper">
+    <div class="container-fluid">
+        <h1>Backup Your PHP Project</h1>
 
+        <!-- Backup Button -->
+        <form method="POST" action="">
+            <button type="submit" name="backup" style="padding: 10px 20px; font-size: 16px;">Backup Now</button>
+        </form>
+    </div>
+</section>
 
-<h1>Backup Your PHP Project</h1>
-
-<!-- Backup Button -->
-<form method="POST" action="">
-    <button type="submit" name="backup" style="padding: 10px 20px; font-size: 16px;">Backup Now</button>
-</form>
 <?php include_once "footer.php"; ?>
