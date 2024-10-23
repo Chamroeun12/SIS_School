@@ -10,6 +10,8 @@ $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Refresh the page after 30 seconds -->
+<!-- <meta http-equiv="refresh" content="30"> -->
     <title>SmartBright International School</title>
     <link rel="icon" href="images/SiSlogo.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
