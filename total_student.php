@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Build the SQL query
 
-$sql = "SELECT * FROM tb_student"; 
+$sql = "SELECT * FROM tb_student";
 $sql .= " ORDER BY En_name ASC";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
@@ -17,50 +17,50 @@ $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php include_once "header.php"; ?>
 <style>
-@media print {
+    @media print {
 
-    /* Hide footer */
-    footer {
-        display: none;
+        /* Hide footer */
+        footer {
+            display: none;
+        }
+
+        /* Ensure table borders and background colors are printed */
+        table {
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid black !important;
+            /* Set borders to black */
+            color: black !important;
+            /* Set text color to black */
+        }
+
+        /* Set specific table header background */
+        thead {
+            background-color: darkblue !important;
+            /* Ensure background is printed */
+        }
+
+        /* Adjust padding for better print layout */
+        th,
+        td {
+            padding: 10px;
+        }
+
+        /* Hide any unnecessary buttons or elements */
+        .btn1,
+        .card-title {
+            display: none;
+        }
     }
 
-    /* Ensure table borders and background colors are printed */
-    table {
-        border-collapse: collapse;
+    /* Optional: Add color back to the web page (non-print view) */
+    table th {
+        background-color: #000;
+        /* You can use this to maintain original design */
     }
-
-    th,
-    td {
-        border: 1px solid black !important;
-        /* Set borders to black */
-        color: black !important;
-        /* Set text color to black */
-    }
-
-    /* Set specific table header background */
-    thead {
-        background-color: darkblue !important;
-        /* Ensure background is printed */
-    }
-
-    /* Adjust padding for better print layout */
-    th,
-    td {
-        padding: 10px;
-    }
-
-    /* Hide any unnecessary buttons or elements */
-    .btn1,
-    .card-title {
-        display: none;
-    }
-}
-
-/* Optional: Add color back to the web page (non-print view) */
-table th {
-    background-color: #000;
-    /* You can use this to maintain original design */
-}
 </style>
 <div class="">
     <h3 class="card-title float-sm-right pr-4 pt-4">
@@ -101,31 +101,31 @@ table th {
                         </thead>
                         <tbody id="showdata">
                             <?php foreach ($data as $key => $value) { ?>
-                            <t>
-                                <td><?php
+                                <t>
+                                    <td><?php
                                         if (isset($_GET['page']) && $_GET['page'] > 1)
                                             echo ($_GET['page'] - 1) * 10 + ($key + 1);
                                         else
                                             echo ($key + 1);
                                         ?></td>
-                                <td>
-                                    <div class="user-panel p-0">
-                                        <div class="image p-0">
-                                            <img onerror="this.style.display = 'none'" class="img-circle p-0"
-                                                src="images/<?= $value['Profile_img']; ?>"
-                                                style="width: 35px; height: 35px; object-fit:cover;" />
+                                    <td>
+                                        <div class="user-panel p-0">
+                                            <div class="image p-0">
+                                                <img onerror="this.style.display = 'none'" class="img-circle p-0"
+                                                    src="images/<?= $value['Profile_img']; ?>"
+                                                    style="width: 35px; height: 35px; object-fit:cover;" />
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td><?php echo $value['Stu_code']; ?></td>
-                                <td><?php echo $value['En_name']; ?></td>
-                                <td><?php echo $value['Kh_name']; ?></td>
-                                <td><?php echo $value['Gender']; ?></td>
-                                <td><?php echo date('d-M-Y', strtotime($value['DOB'])); ?></td>
-                                <td><?php echo $value['Address']; ?></td>
-                                <td><?php echo $value['Phone']; ?></td>
-                                <td></td>
-                                </tr>
+                                    </td>
+                                    <td><?php echo $value['Stu_code']; ?></td>
+                                    <td><?php echo $value['En_name']; ?></td>
+                                    <td><?php echo $value['Kh_name']; ?></td>
+                                    <td><?php echo $value['Gender']; ?></td>
+                                    <td><?php echo date('d-M-Y', strtotime($value['DOB'])); ?></td>
+                                    <td><?php echo $value['Address']; ?></td>
+                                    <td><?php echo $value['Phone']; ?></td>
+                                    <td></td>
+                                    </tr>
                                 <?php } ?>
                         </tbody>
                     </table>
@@ -140,10 +140,10 @@ table th {
 </div>
 
 <script>
-function preview(evt) {
-    let img = document.getElementById('img');
-    img.src = URL.createObjectURL(evt.target.files[0]);
-}
+    function preview(evt) {
+        let img = document.getElementById('img');
+        img.src = URL.createObjectURL(evt.target.files[0]);
+    }
 </script>
 
 <?php include_once "footer.php"; ?>
