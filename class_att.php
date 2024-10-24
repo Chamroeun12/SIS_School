@@ -1,11 +1,81 @@
 <?php
+require 'vendors/autoload.php';
+
 include_once 'connection.php';
-require 'vendors/autoload.php'; // Autoloader for PhpSpreadsheet
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+
+
+if (isset($_POST['export_excel'])) {
+    // Create a new Spreadsheet object
+    $start = $_POST['start'];
+    $end = $_POST['end'];
+    if(isset($_GET['classatt'])){
+    $classatt = $_GET['classatt'];
+    // echo $classname;
+    $query = "SELECT stu.En_name,
+                stu.Kh_name,
+                stu.Stu_code,
+                stu.DOB,
+                stu.Address,
+                stu.Phone,
+                stu.Gender,
+                r.Name,
+                co.Course_name,
+                c.Shift,
+                c.Start_class,
+                c.End_class,
+                t.Kh_name AS Teacher_Name,
+                att.Date,
+                att.Attendance 
+                  FROM tb_attendance att
+                  INNER JOIN tb_student stu ON att.Stu_id = stu.ID
+                  INNER JOIN tb_class c ON att.Class_id = c.ClassID
+                  INNER JOIN tb_teacher t ON c.Teacher_id = t.id
+                  INNER JOIN tb_course co ON c.course_id = co.id
+                  INNER JOIN tb_classroom r ON c.room_id = r.id
+WHERE Class_id =:classatt AND att.Date BETWEEN '$start' AND '$end' ";
+$stmt = $conn->prepare($query);
+$stmt->bindParam(':classatt', $classatt, PDO::PARAM_INT);
+$stmt->execute();
+$Class = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+    $spreadsheet = new Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+
+    // Set column headers
+    $headers = ['Student Code', 'Kh Name', 'Gender', 'DOB', 'Phone', 'Attendance'];
+    $column = 'A';
+    foreach ($headers as $header) {
+        $sheet->setCellValue($column . '1', $header);
+        $column++;
+    }
+
+    // Populate rows with data
+    $rowCount = 2;
+    foreach ($Class as $row) {
+        $sheet->setCellValue('A' . $rowCount, $row['Stu_code']);
+        $sheet->setCellValue('B' . $rowCount, $row['Kh_name']);
+        $sheet->setCellValue('C' . $rowCount, $row['Gender']);
+        $sheet->setCellValue('D' . $rowCount, $row['DOB']);
+        $sheet->setCellValue('E' . $rowCount, $row['Phone']);
+        $sheet->setCellValue('F' . $rowCount, $row['Attendance']);
+        $rowCount++;
+    }
+
+    // Set the headers for the Excel file download
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename="attendance_list.xlsx"');
+    header('Cache-Control: max-age=0');
+
+    // Create an Xlsx writer and output the spreadsheet to the browser
+    $writer = new Xlsx($spreadsheet);
+    $writer->save('php://output');
+    exit; // Exit to prevent further output
 }
 
 if (isset($_POST['save'])) {
@@ -41,42 +111,6 @@ WHERE Class_id =:classatt AND att.Date BETWEEN '$start' AND '$end' ";
         $stmt->execute();
         $Class = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-}
-
-if (isset($_POST['export_excel'])) {
-    // Create a new Spreadsheet object
-    $spreadsheet = new Spreadsheet();
-    $sheet = $spreadsheet->getActiveSheet();
-
-    // Set column headers
-    $headers = ['Student Code', 'Kh Name', 'Gender', 'DOB', 'Phone', 'Attendance'];
-    $column = 'A';
-    foreach ($headers as $header) {
-        $sheet->setCellValue($column . '1', $header);
-        $column++;
-    }
-
-    // Populate rows with data
-    $rowCount = 2;
-    foreach ($Class as $row) {
-        $sheet->setCellValue('A' . $rowCount, $row['Stu_code']);
-        $sheet->setCellValue('B' . $rowCount, $row['Kh_name']);
-        $sheet->setCellValue('C' . $rowCount, $row['Gender']);
-        $sheet->setCellValue('D' . $rowCount, $row['DOB']);
-        $sheet->setCellValue('E' . $rowCount, $row['Phone']);
-        $sheet->setCellValue('F' . $rowCount, $row['Attendance']);
-        $rowCount++;
-    }
-
-    // Set the headers for the Excel file download
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename="attendance_list.xlsx"');
-    header('Cache-Control: max-age=0');
-
-    // Create an Xlsx writer and output the spreadsheet to the browser
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('php://output');
-    exit; // Exit to prevent further output
 }
 
 include_once "header.php";
