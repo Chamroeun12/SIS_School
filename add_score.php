@@ -50,7 +50,7 @@ if (isset($_GET['class_id'])) {
     $class = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-if (isset($_POST['btnsave'])) {
+if (isset($_POST['for_month'])) {
     $for_month = $_POST['for_month'];
     $scores = $_POST['scorebox'];
 
@@ -77,12 +77,13 @@ if (isset($_POST['btnsave'])) {
         // Bind parameters
         $stmt->bindParam(':student_id', $student_id, PDO::PARAM_INT);
         $stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT);
-        $stmt->bindParam(':homework', $homework, PDO::PARAM_INT);
-        $stmt->bindParam(':participation', $participation, PDO::PARAM_INT);
-        $stmt->bindParam(':attendance', $attendance, PDO::PARAM_INT);
-        $stmt->bindParam(':monthly', $monthly, PDO::PARAM_INT);
+        $stmt->bindParam(':homework', $homework, PDO::PARAM_STR);
+        $stmt->bindParam(':participation', $participation, PDO::PARAM_STR);
+        $stmt->bindParam(':attendance', $attendance, PDO::PARAM_STR);
+        $stmt->bindParam(':monthly', $monthly, PDO::PARAM_STR);
         $stmt->bindParam(':average', $average, PDO::PARAM_STR);
         $stmt->bindParam(':for_month', $for_month, PDO::PARAM_STR);
+
 
         // Execute the query
         // if ($stmt->execute()) {
@@ -90,15 +91,14 @@ if (isset($_POST['btnsave'])) {
         // } else {
         //     var_dump($stmt->errorInfo()); // Check for errors
         // }
-            // Execute and handle success/error
+
+
+        // Execute and handle success/error
         if ($stmt->execute()) {
             $_SESSION['message'] = 'Scores saved successfully!';
             $_SESSION['message_type'] = 'success';
-          } else {
-              $_SESSION['message'] = 'Failed to Scores. Please try again.';
-              $_SESSION['message_type'] = 'error';
-          }
         }
+    }
 }
 ?>
 
@@ -111,7 +111,7 @@ if (isset($_POST['btnsave'])) {
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>| តារាងបញ្ចូលពិន្ទុ</h1>
+                    <h1>|តារាងបញ្ចូលពិន្ទុ</h1>
                 </div>
             </div>
         </div>
@@ -129,8 +129,8 @@ if (isset($_POST['btnsave'])) {
                                     <div class="col-sm-5">
                                         <label for="for_month">បញ្ចូលសម្រាប់ខែ</label>
                                         <select name="for_month" id="for_month" class="form-control form-select"
-                                            style="font-size:14px;" required>
-                                            <option selected disabled>-- ជ្រើសរើសខែ --</option>
+                                            required style="font-size:14px;">
+                                            <option value="" selected disabled>-- ជ្រើសរើសខែ --</option>
                                             <option value="First Month">ប្រចាំខែទី១</option>
                                             <option value="Second Month">ប្រចាំខែទី២</option>
                                             <option value="Third Month">ប្រចាំខែទី៣</option>
@@ -151,8 +151,10 @@ if (isset($_POST['btnsave'])) {
                                         <thead>
                                             <tr>
                                                 <th style="background-color:#152550; color:white;">ល.រ</th>
-                                                <th style="background-color:#152550; color:white;">អត្តលេខ</th>
-                                                <th style="background-color:#152550; color:white;">ឈ្មោះសិស្ស</th>
+                                                <th style="background-color:#152550; color:white; width:15%;">អត្តលេខ
+                                                </th>
+                                                <th style="background-color:#152550; color:white; width:15%;">ឈ្មោះសិស្ស
+                                                </th>
                                                 <th style="background-color:#152550; color:white;">ភេទ</th>
                                                 <?php foreach ($subjects as $subject): ?>
                                                 <th style="background-color:#152550; color:white;" class="text-center">
@@ -166,13 +168,13 @@ if (isset($_POST['btnsave'])) {
                                             <tr>
                                                 <td><?php echo $key + 1; ?></td>
                                                 <td><?php echo $student['Stu_code']; ?></td>
-                                                <td><?php echo $student['En_name']; ?></td>
+                                                <td><?php echo $student['Kh_name']; ?></td>
                                                 <td><?php echo $student['Gender']; ?></td>
                                                 <?php foreach ($subjects as $subject): ?>
                                                 <td style="padding:0px">
                                                     <input type="number" class="form-control text-center"
                                                         name="scorebox[<?php echo $student['ID']; ?>][<?php echo $subject['name']; ?>]"
-                                                        placeholder="0-100" min="0" max="100" required>
+                                                        placeholder="0-100" min="0" max="100" step="any" required>
                                                 </td>
                                                 <?php endforeach; ?>
                                             </tr>

@@ -207,7 +207,9 @@ table th {
     <div class="row pt-4">
         <?php if (!empty($Class)) { ?>
         <div class="col-sm-4">
-
+            <div class="ml-3 print-only">
+                <img src="images/SiSlogo.png" alt="SISLogo" width="40">
+            </div>
             <div class="ml-3">
                 <tr>បន្ទប់ <?php echo htmlspecialchars($Class[0]['Name']); ?> - កម្រិតសិក្សា
                     <?php echo htmlspecialchars($Class[0]['Course_name']); ?></tr>

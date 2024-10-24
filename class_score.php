@@ -55,16 +55,16 @@ if (isset($_POST['export_excel'])) {
 
         // Set header row
         $sheet->setCellValue('A1', 'ល.រ')
-              ->setCellValue('B1', 'អត្តលេខ')
-              ->setCellValue('C1', 'ឈ្មោះ')
-              ->setCellValue('D1', 'ភេទ')
-              ->setCellValue('E1', 'កិច្ចការផ្ទះ')
-              ->setCellValue('F1', 'ការចូលរួម')
-              ->setCellValue('G1', 'វត្តមាន')
-              ->setCellValue('H1', 'ប្រចាំខែ')
-              ->setCellValue('I1', 'មធ្យមភាគ')
-              ->setCellValue('J1', 'Rank')
-              ->setCellValue('K1', 'For Month');
+            ->setCellValue('B1', 'អត្តលេខ')
+            ->setCellValue('C1', 'ឈ្មោះ')
+            ->setCellValue('D1', 'ភេទ')
+            ->setCellValue('E1', 'កិច្ចការផ្ទះ')
+            ->setCellValue('F1', 'ការចូលរួម')
+            ->setCellValue('G1', 'វត្តមាន')
+            ->setCellValue('H1', 'ប្រចាំខែ')
+            ->setCellValue('I1', 'មធ្យមភាគ')
+            ->setCellValue('J1', 'Rank')
+            ->setCellValue('K1', 'For Month');
 
         // Fill data rows
         $i = 2; // Starting row after header
@@ -78,16 +78,16 @@ if (isset($_POST['export_excel'])) {
             $previousAverage = $row['Average'];
 
             $sheet->setCellValue('A' . $i, $i - 1)
-                  ->setCellValue('B' . $i, $row['Stu_code'])
-                  ->setCellValue('C' . $i, $row['Student_Name'])
-                  ->setCellValue('D' . $i, $row['Gender'])
-                  ->setCellValue('E' . $i, $row['Homework'])
-                  ->setCellValue('F' . $i, $row['Participation'])
-                  ->setCellValue('G' . $i, $row['Attendance'])
-                  ->setCellValue('H' . $i, $row['Monthly'])
-                  ->setCellValue('I' . $i, $row['Average'])
-                  ->setCellValue('J' . $i, $rank)
-                  ->setCellValue('K' . $i, $row['for_month']);
+                ->setCellValue('B' . $i, $row['Stu_code'])
+                ->setCellValue('C' . $i, $row['Student_Name'])
+                ->setCellValue('D' . $i, $row['Gender'])
+                ->setCellValue('E' . $i, $row['Homework'])
+                ->setCellValue('F' . $i, $row['Participation'])
+                ->setCellValue('G' . $i, $row['Attendance'])
+                ->setCellValue('H' . $i, $row['Monthly'])
+                ->setCellValue('I' . $i, $row['Average'])
+                ->setCellValue('J' . $i, $rank)
+                ->setCellValue('K' . $i, $row['for_month']);
 
             $i++;
         }
@@ -107,10 +107,10 @@ if (isset($_POST['export_excel'])) {
 
 // Regular data retrieval for displaying on page
 if (isset($_GET['classscore']) && isset($_GET['for_month'])) {
-$classscore = $_GET['classscore'];
-$for_month = $_GET['for_month'];
+    $classscore = $_GET['classscore'];
+    $for_month = $_GET['for_month'];
 
-$query = "SELECT
+    $query = "SELECT
 stu.Kh_name AS Student_Name,
 stu.Stu_code,
 stu.Gender,
@@ -137,11 +137,11 @@ AND Class_id = :classscore
 AND ms.for_month = :for_month
 ORDER BY ms.Average DESC, ms.for_month";
 
-$stmt = $conn->prepare($query);
-$stmt->bindParam(':classscore', $classscore, PDO::PARAM_INT);
-$stmt->bindParam(':for_month', $for_month, PDO::PARAM_STR);
-$stmt->execute();
-$Class = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':classscore', $classscore, PDO::PARAM_INT);
+    $stmt->bindParam(':for_month', $for_month, PDO::PARAM_STR);
+    $stmt->execute();
+    $Class = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 include_once "header.php";
@@ -208,6 +208,9 @@ table th {
 <section class="content-wrapper">
     <div class="row pt-4">
         <div class="col-sm-4">
+            <div class="ml-3 print-only">
+                <img src="images/SiSlogo.png" alt="SISLogo" width="40">
+            </div>
             <?php if (!empty($Class)) { ?>
             <div class="ml-3">
                 <tr>បន្ទប់ <?php echo htmlspecialchars($Class[0]['Name']); ?> - កម្រិតសិក្សា
@@ -283,7 +286,7 @@ table th {
 
 
     <hr>
-    <div class="row m-2">
+    <div class="row card m-2">
         <div class="col-12">
             <div class="card">
                 <div class="card-body table-responsive p-0 text-sm">
@@ -306,16 +309,16 @@ table th {
                         </thead>
                         <tbody>
                             <?php if (!empty($Class)) {
-                                $i=1;
-                                $rank = 1; 
-                                $previousAverage = null; 
-                                foreach ($Class as $row) { 
+                                $i = 1;
+                                $rank = 1;
+                                $previousAverage = null;
+                                foreach ($Class as $row) {
                                     // Check if this student's average is different from the previous one
                                     if ($previousAverage !== null && $row['Average'] != $previousAverage) {
                                         $rank++; // Increment the rank only if the average is different
                                     }
                                     $previousAverage = $row['Average']; // Update the previous average to the current one
-                                ?>
+                            ?>
                             <tr>
                                 <td><?php echo $i++; ?></td> <!-- Rank -->
                                 <td><?php echo htmlspecialchars($row['Stu_code']); ?></td>
