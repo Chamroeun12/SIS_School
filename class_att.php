@@ -5,6 +5,7 @@ include_once 'connection.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -14,10 +15,10 @@ if (isset($_POST['export_excel'])) {
     // Create a new Spreadsheet object
     $start = $_POST['start'];
     $end = $_POST['end'];
-    if(isset($_GET['classatt'])){
-    $classatt = $_GET['classatt'];
-    // echo $classname;
-    $query = "SELECT stu.En_name,
+    if (isset($_GET['classatt'])) {
+        $classatt = $_GET['classatt'];
+        // echo $classname;
+        $query = "SELECT stu.En_name,
                 stu.Kh_name,
                 stu.Stu_code,
                 stu.DOB,
@@ -39,11 +40,11 @@ if (isset($_POST['export_excel'])) {
                   INNER JOIN tb_course co ON c.course_id = co.id
                   INNER JOIN tb_classroom r ON c.room_id = r.id
 WHERE Class_id =:classatt AND att.Date BETWEEN '$start' AND '$end' ";
-$stmt = $conn->prepare($query);
-$stmt->bindParam(':classatt', $classatt, PDO::PARAM_INT);
-$stmt->execute();
-$Class = $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':classatt', $classatt, PDO::PARAM_INT);
+        $stmt->execute();
+        $Class = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     $spreadsheet = new Spreadsheet();
     $sheet = $spreadsheet->getActiveSheet();
 
@@ -118,39 +119,39 @@ include_once "header.php";
 
 <!-- Styles for print view (unchanged) -->
 <style>
-    @media print {
-        footer {
-            display: none;
-        }
-
-        table {
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            border: 1px solid black !important;
-            color: black !important;
-        }
-
-        thead {
-            background-color: darkblue !important;
-        }
-
-        th,
-        td {
-            padding: 10px;
-        }
-
-        .btn1,
-        .card-title {
-            display: none;
-        }
+@media print {
+    footer {
+        display: none;
     }
 
-    table th {
-        background-color: #000;
+    table {
+        border-collapse: collapse;
     }
+
+    th,
+    td {
+        border: 1px solid black !important;
+        color: black !important;
+    }
+
+    thead {
+        background-color: darkblue !important;
+    }
+
+    th,
+    td {
+        padding: 10px;
+    }
+
+    .btn1,
+    .card-title {
+        display: none;
+    }
+}
+
+table th {
+    background-color: #000;
+}
 </style>
 
 
@@ -187,11 +188,11 @@ include_once "header.php";
                     <input type="submit" class="btn1 bg-sis text-white" name="save" id="save" value="បង្ហាញ"
                         class="form-control">
                 </div>
-                <div class="col-md-4">
-                </div>
+                <div class="col-md-3">
 
-                <div class="col-md-1">
-                    <button type="button" class="btn bg-danger text-white" onclick="window.print()">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn bg-danger text-white" onclick="window.print()">
                         <i class="fa fa-print"></i> ទាញយក
                     </button>
                 </div>
@@ -205,72 +206,72 @@ include_once "header.php";
     </form>
     <div class="row pt-4">
         <?php if (!empty($Class)) { ?>
-            <div class="col-sm-4">
+        <div class="col-sm-4">
 
-                <div class="ml-3">
-                    <tr>បន្ទប់ <?php echo htmlspecialchars($Class[0]['Name']); ?> - កម្រិតសិក្សា
-                        <?php echo htmlspecialchars($Class[0]['Course_name']); ?></tr>
-                </div>
-                <div class="ml-3">
-                    <tr>វេនសិក្សា <?php echo htmlspecialchars($Class[0]['Shift']); ?>
-                        ឆ្នាំសិក្សា <?php echo htmlspecialchars(date('Y', strtotime($Class[0]['Start_class']))); ?>​ -
-                        <?php echo htmlspecialchars(date('Y', strtotime($Class[0]['End_class']))); ?>
-                    </tr>
-                </div>
-                <div class="ml-3">
-                    <tr>គ្រូបង្រៀន: <?php echo htmlspecialchars($Class[0]['Teacher_Name']); ?></tr>
-                </div>
-                <div class="ml-3">
-                    <tr>កាលបរិច្ឆេទ: <?php echo htmlspecialchars($Class[0]['Date']); ?></tr>
-                </div>
+            <div class="ml-3">
+                <tr>បន្ទប់ <?php echo htmlspecialchars($Class[0]['Name']); ?> - កម្រិតសិក្សា
+                    <?php echo htmlspecialchars($Class[0]['Course_name']); ?></tr>
+            </div>
+            <div class="ml-3">
+                <tr>វេនសិក្សា <?php echo htmlspecialchars($Class[0]['Shift']); ?>
+                    ឆ្នាំសិក្សា <?php echo htmlspecialchars(date('Y', strtotime($Class[0]['Start_class']))); ?>​ -
+                    <?php echo htmlspecialchars(date('Y', strtotime($Class[0]['End_class']))); ?>
+                </tr>
+            </div>
+            <div class="ml-3">
+                <tr>គ្រូបង្រៀន: <?php echo htmlspecialchars($Class[0]['Teacher_Name']); ?></tr>
+            </div>
+            <!-- <div class="ml-3">
+                <tr>កាលបរិច្ឆេទ: <?php echo htmlspecialchars($Class[0]['Date']); ?></tr>
+            </div> -->
 
-            </div>
-            <div class="col-sm-5">
-                <h3 class="text-center">បញ្ជីវត្តមានសិស្ស</h3>
-            </div>
+        </div>
+        <div class="col-sm-5">
+            <h3 class="text-center">បញ្ជីវត្តមានសិស្ស</h3>
+        </div>
         <?php } ?>
     </div>
 
     <hr>
     <?php if (isset($Class)) { ?>
-        <div class="row m-2">
+    <div class="row m-2">
 
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body table-responsive p-0 text-sm">
-                        <table class="table-bordered table-hover table" id="userTbl">
-                            <thead class="table-secondary">
-                                <tr>
-                                    <th style=" font-size:16px;">ល.រ</th>
-                                    <th style=" font-size:16px;">អត្តលេខ</th>
-                                    <th style=" font-size:16px;">ឈ្មោះ</th>
-                                    <th style=" font-size:16px;">ភេទ</th>
-                                    <th style=" font-size:16px;">ថ្ងៃខែឆ្នាំកំណើត</th>
-                                    <th style=" font-size:16px;">លេខទូរស័ព្ទ</th>
-                                    <th style=" font-size:16px;">វត្តមាន</th>
-                                    <th style=" font-size:16px;">ផ្សេងៗ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $i = 1;
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body table-responsive p-0 text-sm">
+                    <table class="table-bordered table-hover table" id="userTbl">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th style=" font-size:16px;">ល.រ</th>
+                                <th style=" font-size:16px;">អត្តលេខ</th>
+                                <th style=" font-size:16px;">ឈ្មោះ</th>
+                                <th style=" font-size:16px;">ភេទ</th>
+                                <th style=" font-size:16px;">ថ្ងៃខែឆ្នាំកំណើត</th>
+                                <th style=" font-size:16px;">លេខទូរស័ព្ទ</th>
+                                <th style=" font-size:16px;">វត្តមាន</th>
+                                <th style=" font-size:16px;">ផ្សេងៗ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $i = 1;
                                 foreach ($Class as $row) { ?>
-                                    <tr>
-                                        <td><?php echo $i++; ?></td>
-                                        <td><?php echo htmlspecialchars($row['Stu_code']); ?></td>
-                                        <td><?php echo htmlspecialchars($row['Kh_name']); ?></td>
-                                        <td><?php echo htmlspecialchars($row['Gender']); ?></td>
-                                        <td><?php echo htmlspecialchars($row['DOB']); ?></td>
-                                        <td><?php echo htmlspecialchars($row['Phone']); ?></td>
-                                        <td><?php echo htmlspecialchars($row['Attendance']); ?></td>
-                                        <td></td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
+                            <tr>
+                                <td><?php echo $i++; ?></td>
+                                <td><?php echo htmlspecialchars($row['Stu_code']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Kh_name']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Gender']); ?></td>
+                                <td><?php echo htmlspecialchars($row['DOB']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Phone']); ?></td>
+                                <td><?php echo htmlspecialchars($row['Attendance']); ?></td>
+                                <td></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
     <?php } else {
         echo '<h4 class="text-center">គ្មានទិន្នន័យ</h4>';
     } ?>

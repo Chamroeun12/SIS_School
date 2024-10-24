@@ -8,7 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if(isset($_GET['classroom'])){
+if (isset($_GET['classroom'])) {
     $classroom = $_GET['classroom'];
     $query = "SELECT
         s.Kh_name AS Student_Name,
@@ -35,7 +35,7 @@ if(isset($_GET['classroom'])){
     INNER JOIN
         tb_student s ON ad.Stu_id = s.ID
     WHERE Class_id = :classroom";
-    
+
     $stmt = $conn->prepare($query);
     $stmt->bindParam(':classroom', $classroom, PDO::PARAM_INT);
     $stmt->execute();
@@ -139,6 +139,9 @@ table th {
         <div class="col-sm-4">
             <?php if (!empty($Class)) { ?>
             <div class="ml-3">
+                <img src="images/SiSlogo.png" alt="SISLogo" width="40">
+            </div>
+            <div class="ml-3">
                 <tr>បន្ទប់ <?php echo htmlspecialchars($Class[0]['room']); ?> - កម្រិតសិក្សា
                     <?php echo htmlspecialchars($Class[0]['Course_name']); ?></tr>
             </div>
@@ -177,7 +180,8 @@ table th {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $i = 1; foreach ($Class as $row) { ?>
+                            <?php $i = 1;
+                            foreach ($Class as $row) { ?>
                             <tr>
                                 <td><?php echo $i++; ?></td>
                                 <td><?php echo htmlspecialchars($row['Stu_code']); ?></td>

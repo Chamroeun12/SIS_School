@@ -13,6 +13,7 @@ $msg = '';
 // Fetch all active classes for the dropdown
 $sql = "SELECT * FROM tb_class
         INNER JOIN tb_course ON tb_class.course_id = tb_course.id
+        INNER join tb_teacher t ON tb_class.Teacher_id = t.id
         INNER JOIN tb_classroom ON tb_class.room_id = tb_classroom.id
         WHERE tb_class.Status = 'Active'";
 $stmt = $conn->prepare($sql);
@@ -114,7 +115,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         style="font-size:14px;">
                                         <option value="">--ជ្រើសរើសថ្នាក់--</option>
                                         <?php foreach ($classes as $row) : ?>
-                                        <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
+                                        <option value="<?= $row['ClassID']; ?>"><?= $row['Kh_name']; ?> -
+                                            <?= $row['Name']; ?> -
                                             <?= $row['Course_name']; ?> - <?= $row['Shift']; ?></option>
                                         <?php endforeach; ?>
                                     </select>

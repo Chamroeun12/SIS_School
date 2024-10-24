@@ -42,6 +42,7 @@ if (isset($_POST['addclass'])) {
 $sql = "SELECT * FROM tb_class
 INNER join
     tb_course ON tb_class.course_id = tb_course.id
+    INNER join tb_teacher t ON tb_class.Teacher_id = t.id
     INNER JOIN tb_classroom ON tb_class.room_id = tb_classroom.id
 where tb_class.Status = 'Active'";
 $stmt = $conn->prepare($sql);
@@ -87,11 +88,12 @@ if ($temp) {
                                             style="font-size:14px;">
                                             <option selected disabled>--ជ្រើសរើស--</option>
                                             <?php foreach ($classes as $row) : ?>
-                                                <option value="<?= $row['ClassID']; ?>"
-                                                    <?= isset($_POST['addclass']) && $_POST['addclass'] == $row['ClassID'] ? 'selected' : '' ?>>
-                                                    <?= $row['Name']; ?> - <?= $row['Course_name']; ?> -
-                                                    <?= $row['Shift']; ?>
-                                                </option>
+                                            <option value="<?= $row['ClassID']; ?>"
+                                                <?= isset($_POST['addclass']) && $_POST['addclass'] == $row['ClassID'] ? 'selected' : '' ?>>
+                                                <?= $row['Kh_name']; ?> - <?= $row['Name']; ?> -
+                                                <?= $row['Course_name']; ?> -
+                                                <?= $row['Shift']; ?>
+                                            </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -134,25 +136,25 @@ if ($temp) {
                                 <tbody id="showdata">
                                     <!-- Show students already in the class -->
                                     <?php if (isset($students_in_class) && !empty($students_in_class)) { ?>
-                                        <?php foreach ($students_in_class as $key => $student) { ?>
-                                            <tr>
-                                                <td><?= $key + 1; ?></td>
-                                                <td><?= $student['Name']; ?></td>
-                                                <td><?= $student['Stu_code']; ?></td>
-                                                <td><?= $student['En_name']; ?></td>
-                                                <td><?= $student['Kh_name']; ?></td>
-                                                <td><?= $student['Gender']; ?></td>
-                                                <td><?= $student['DOB']; ?></td>
-                                                <td>
-                                                    <!-- Remove button to delete the student from the class -->
-                                                    <a href="?remove_id=<?= $student['ID']; ?>&class_id=<?= $class_id; ?>"
-                                                        class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Are you sure you want to remove this student?');">
-                                                        យកចេញ
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        <?php } ?>
+                                    <?php foreach ($students_in_class as $key => $student) { ?>
+                                    <tr>
+                                        <td><?= $key + 1; ?></td>
+                                        <td><?= $student['Name']; ?></td>
+                                        <td><?= $student['Stu_code']; ?></td>
+                                        <td><?= $student['En_name']; ?></td>
+                                        <td><?= $student['Kh_name']; ?></td>
+                                        <td><?= $student['Gender']; ?></td>
+                                        <td><?= $student['DOB']; ?></td>
+                                        <td>
+                                            <!-- Remove button to delete the student from the class -->
+                                            <a href="?remove_id=<?= $student['ID']; ?>&class_id=<?= $class_id; ?>"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Are you sure you want to remove this student?');">
+                                                យកចេញ
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <?php } ?>
                                     <?php } else { ?>
                                     <?php } ?>
                                 </tbody>
@@ -176,7 +178,7 @@ if ($temp) {
                         ?>
                     ">&laquo;</a></li>
                                 <?php for ($i = 1; $i <= $maxpage; $i++) { ?>
-                                    <li class="page-item
+                                <li class="page-item
                       <?php
                                     if (isset($_GET['page'])) {
                                         if ($i == $_GET['page'])
@@ -186,8 +188,8 @@ if ($temp) {
                                             echo ' active ';
                                     }
                         ?>"><a class="page-link"
-                                            href="student_in_class.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                                    </li>
+                                        href="student_in_class.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                </li>
                                 <?php } ?>
                                 <li class="page-item"><a class="page-link" href="student_in_class.php?page=
                      <?php

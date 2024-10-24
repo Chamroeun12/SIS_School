@@ -6,8 +6,10 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Fetch Classes
 $sql = "SELECT * FROM tb_class
-INNER join
+
+    INNER join
     tb_course ON tb_class.course_id = tb_course.id
+    INNER JOIN tb_teacher t ON tb_class.Teacher_id = t.id
     INNER jOIN tb_classroom ON tb_class.room_id = tb_classroom.id
 where tb_class.Status = 'Active'";
 
@@ -16,7 +18,7 @@ $stmt->execute();
 $class = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Number of records per page
-$records_per_page = 15; 
+$records_per_page = 15;
 
 
 $sql = "SELECT * FROM tb_student  WHERE status='active' LIMIT $records_per_page";
@@ -90,7 +92,8 @@ if (isset($_POST['btnsave'])) {
                                     <select name="addclass" class="form-control form-select">
                                         <option selected disabled="">--ជ្រើសរើសថ្នាក់--</option>
                                         <?php foreach ($class as $row) : ?>
-                                        <option value="<?= $row['ClassID']; ?>"><?= $row['Name']; ?> -
+                                        <option value="<?= $row['ClassID']; ?>"><?= $row['Kh_name']; ?> -
+                                            <?= $row['Name']; ?> -
                                             <?= $row['Course_name']; ?> - <?= $row['Shift']; ?> </option>
                                         <?php endforeach; ?>
                                     </select>
