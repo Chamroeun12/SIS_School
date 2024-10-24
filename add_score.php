@@ -129,7 +129,7 @@ if (isset($_POST['btnsave'])) {
                                     <div class="col-sm-5">
                                         <label for="for_month">បញ្ចូលសម្រាប់ខែ</label>
                                         <select name="for_month" id="for_month" class="form-control form-select"
-                                                style="font-size:14px;" required>
+                                            style="font-size:14px;" required>
                                             <option selected disabled>-- ជ្រើសរើសខែ --</option>
                                             <option value="First Month">ប្រចាំខែទី១</option>
                                             <option value="Second Month">ប្រចាំខែទី២</option>
@@ -155,9 +155,9 @@ if (isset($_POST['btnsave'])) {
                                                 <th style="background-color:#152550; color:white;">ឈ្មោះសិស្ស</th>
                                                 <th style="background-color:#152550; color:white;">ភេទ</th>
                                                 <?php foreach ($subjects as $subject): ?>
-                                                    <th style="background-color:#152550; color:white;" class="text-center">
-                                                        <?php echo $subject['name']; ?>
-                                                    </th>
+                                                <th style="background-color:#152550; color:white;" class="text-center">
+                                                    <?php echo $subject['name']; ?>
+                                                </th>
                                                 <?php endforeach; ?>
                                             </tr>
                                         </thead>
@@ -169,11 +169,11 @@ if (isset($_POST['btnsave'])) {
                                                 <td><?php echo $student['En_name']; ?></td>
                                                 <td><?php echo $student['Gender']; ?></td>
                                                 <?php foreach ($subjects as $subject): ?>
-                                                    <td style="padding:0px">
-                                                        <input type="number" class="form-control text-center"
-                                                               name="scorebox[<?php echo $student['ID']; ?>][<?php echo $subject['name']; ?>]"
-                                                               placeholder="0-100" min="0" max="100" required>
-                                                    </td>
+                                                <td style="padding:0px">
+                                                    <input type="number" class="form-control text-center"
+                                                        name="scorebox[<?php echo $student['ID']; ?>][<?php echo $subject['name']; ?>]"
+                                                        placeholder="0-100" min="0" max="100" required>
+                                                </td>
                                                 <?php endforeach; ?>
                                             </tr>
                                             <?php endforeach; ?>
